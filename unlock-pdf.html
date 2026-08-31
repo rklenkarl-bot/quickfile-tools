@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Unlock PDF Online | Remove PDF Password | QuickFile Tools
+  </title>
+
+  <meta
+    name="description"
+    content="Unlock password-protected PDF files online when you know the password. Remove PDF password protection and download an unlocked copy."
+  >
+
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
+
+  <style>
+    .unlock-container {
+      width: 100%;
+      max-width: 700px;
+      margin: 25px auto 0;
+    }
+
+    .unlock-file-box {
+      display: none;
+      margin-top: 20px;
+      padding: 16px;
+      border: 1px solid #e0e4e8;
+      border-radius: 10px;
+      background: #f9fafb;
+      text-align: left;
+    }
+
+    .unlock-file-name {
+      font-weight: 700;
+      word-break: break-word;
+      margin-bottom: 5px;
+    }
+
+    .unlock-file-size {
+      color: #667085;
+      font-size: 14px;
+    }
+
+    .unlock-password-area {
+      display: none;
+      margin-top: 22px;
+      text-align: left;
+    }
+
+    .unlock-password-area label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .unlock-password-wrapper {
+      position: relative;
+    }
+
+    #unlockPassword {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 12px 48px 12px 12px;
+      border: 1px solid #ccd2da;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    #toggleUnlockPassword {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      font-size: 19px;
+    }
+
+    .unlock-note {
+      margin-top: 8px;
+      color: #667085;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    #unlockPdfButton {
+      display: none;
+      margin: 22px auto 0;
+    }
+
+    #unlockStatus {
+      min-height: 25px;
+      margin-top: 14px;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .unlock-success {
+      color: #16803a;
+    }
+
+    .unlock-error {
+      color: #c62828;
+    }
+
+    .unlock-loader {
+      display: none;
+      width: 34px;
+      height: 34px;
+      margin: 16px auto 0;
+      border: 4px solid #e4e7ec;
+      border-top-color: #2563eb;
+      border-radius: 50%;
+      animation: unlock-spin 0.8s linear infinite;
+    }
+
+    @keyframes unlock-spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="main-header">
+
+    <div class="brand">
+
+      <div class="brand-logo">
+        QF
+      </div>
+
+      <div class="brand-text">
+        <h1>QuickFile Tools</h1>
+
+        <p>
+          Fast, Free & Easy Online File Tools
+        </p>
+      </div>
+
+    </div>
+
+    <nav class="main-nav">
+
+      <a href="index.html">
+        Home
+      </a>
+
+      <a href="all-tools.html">
+        All Tools
+      </a>
+
+      <a href="#">
+        About Us
+      </a>
+
+      <a href="#">
+        Blog
+      </a>
+
+      <a href="#">
+        Contact
+      </a>
+
+    </nav>
+
+  </header>
+
+
+  <!-- HERO -->
+  <section class="merge-pdf-hero">
+
+    <h2>
+      Unlock PDF
+    </h2>
+
+    <p>
+      Remove password protection from a PDF when you know
+      the correct password.
+    </p>
+
+  </section>
+
+
+  <!-- TOOL -->
+  <section class="merge-pdf-tool-section">
+
+    <div class="merge-upload-box">
+
+      <div class="merge-upload-icon">
+        🔓
+      </div>
+
+      <h3>
+        Select Password-Protected PDF
+      </h3>
+
+      <p>
+        Choose the PDF file you want to unlock.
+      </p>
+
+
+      <input
+        type="file"
+        id="unlockPdfInput"
+        accept="application/pdf"
+        hidden
+      >
+
+
+      <button
+        type="button"
+        id="selectUnlockPdfButton"
+        class="merge-select-button"
+      >
+        Select PDF File
+      </button>
+
+
+      <div class="unlock-container">
+
+        <div
+          id="unlockFileBox"
+          class="unlock-file-box"
+        >
+
+          <div
+            id="unlockFileName"
+            class="unlock-file-name"
+          ></div>
+
+          <div
+            id="unlockFileSize"
+            class="unlock-file-size"
+          ></div>
+
+        </div>
+
+
+        <div
+          id="unlockPasswordArea"
+          class="unlock-password-area"
+        >
+
+          <label for="unlockPassword">
+            PDF Password
+          </label>
+
+
+          <div class="unlock-password-wrapper">
+
+            <input
+              type="password"
+              id="unlockPassword"
+              placeholder="Enter PDF password"
+              autocomplete="off"
+            >
+
+            <button
+              type="button"
+              id="toggleUnlockPassword"
+              title="Show or hide password"
+            >
+              👁️
+            </button>
+
+          </div>
+
+
+          <div class="unlock-note">
+            Enter the password currently used to open this PDF.
+            QuickFile Tools does not attempt to guess or crack passwords.
+          </div>
+
+        </div>
+
+
+        <button
+          type="button"
+          id="unlockPdfButton"
+          class="merge-action-button"
+        >
+          Unlock & Download PDF
+        </button>
+
+
+        <div
+          id="unlockLoader"
+          class="unlock-loader"
+        ></div>
+
+
+        <div id="unlockStatus"></div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- HOW TO USE -->
+  <section class="merge-info-section">
+
+    <div class="merge-info-card">
+
+      <h2>
+        How to Unlock a PDF
+      </h2>
+
+      <div class="merge-steps-grid">
+
+        <div class="merge-step">
+
+          <div class="merge-step-icon">
+            📁
+          </div>
+
+          <h3>
+            1. Select PDF
+          </h3>
+
+          <p>
+            Choose your password-protected PDF file.
+          </p>
+
+        </div>
+
+
+        <div class="merge-step">
+
+          <div class="merge-step-icon">
+            🔑
+          </div>
+
+          <h3>
+            2. Enter Password
+          </h3>
+
+          <p>
+            Enter the correct password used to open the PDF.
+          </p>
+
+        </div>
+
+
+        <div class="merge-step">
+
+          <div class="merge-step-icon">
+            🔓
+          </div>
+
+          <h3>
+            3. Unlock
+          </h3>
+
+          <p>
+            QuickFile Tools removes the password protection.
+          </p>
+
+        </div>
+
+
+        <div class="merge-step">
+
+          <div class="merge-step-icon">
+            ⬇️
+          </div>
+
+          <h3>
+            4. Download
+          </h3>
+
+          <p>
+            Download the unlocked PDF copy.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ABOUT -->
+  <section class="merge-about-section">
+
+    <div class="merge-about-card">
+
+      <div class="merge-about-icon">
+        🔓
+      </div>
+
+      <div class="merge-about-content">
+
+        <h2>
+          About Unlock PDF
+        </h2>
+
+        <p>
+          Unlock PDF helps remove password protection from PDF
+          documents when you already know the correct password.
+        </p>
+
+        <p>
+          The unlocked copy can then be opened without entering
+          the original password.
+        </p>
+
+      </div>
+
+
+      <div class="merge-about-points">
+
+        <p>
+          ✓ Simple Password Removal
+        </p>
+
+        <p>
+          ✓ Original PDF Quality
+        </p>
+
+        <p>
+          ✓ Fast Processing
+        </p>
+
+        <p>
+          ✓ Easy Download
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- TRUST -->
+  <section class="merge-trust-section">
+
+    <div class="merge-trust-grid">
+
+      <div class="merge-trust-card">
+
+        <div class="merge-trust-icon">
+          🔐
+        </div>
+
+        <h3>
+          Password Required
+        </h3>
+
+        <p>
+          The correct existing PDF password must be provided.
+        </p>
+
+      </div>
+
+
+      <div class="merge-trust-card">
+
+        <div class="merge-trust-icon">
+          📄
+        </div>
+
+        <h3>
+          Original Quality
+        </h3>
+
+        <p>
+          PDF pages are not converted to screenshots or images.
+        </p>
+
+      </div>
+
+
+      <div class="merge-trust-card">
+
+        <div class="merge-trust-icon">
+          ⚡
+        </div>
+
+        <h3>
+          Fast
+        </h3>
+
+        <p>
+          Unlock compatible PDF documents in just a few moments.
+        </p>
+
+      </div>
+
+
+      <div class="merge-trust-card">
+
+        <div class="merge-trust-icon">
+          ✅
+        </div>
+
+        <h3>
+          Easy to Use
+        </h3>
+
+        <p>
+          Select the PDF, enter the password and download.
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- FAQ -->
+  <section class="merge-faq-section">
+
+    <div class="merge-faq-container">
+
+      <div class="section-heading">
+
+        <h2>
+          Frequently Asked Questions
+        </h2>
+
+        <p>
+          Common questions about unlocking PDF files.
+        </p>
+
+      </div>
+
+
+      <div class="merge-faq-item">
+
+        <h3>
+          Do I need to know the PDF password?
+        </h3>
+
+        <p>
+          Yes. You need the correct password currently protecting
+          the PDF.
+        </p>
+
+      </div>
+
+
+      <div class="merge-faq-item">
+
+        <h3>
+          Does this tool crack forgotten passwords?
+        </h3>
+
+        <p>
+          No. This tool does not guess, bypass or crack unknown
+          PDF passwords.
+        </p>
+
+      </div>
+
+
+      <div class="merge-faq-item">
+
+        <h3>
+          Will the unlocked PDF keep its original quality?
+        </h3>
+
+        <p>
+          Yes. The PDF is decrypted without converting its pages
+          into images.
+        </p>
+
+      </div>
+
+
+      <div class="merge-faq-item">
+
+        <h3>
+          Can I open the downloaded PDF without a password?
+        </h3>
+
+        <p>
+          Yes. After successful unlocking, the downloaded copy
+          should no longer require the original opening password.
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- FOOTER -->
+  <footer class="merge-page-footer">
+
+    <div class="merge-footer-links">
+
+      <a href="#">
+        Privacy Policy
+      </a>
+
+      <a href="#">
+        Terms of Use
+      </a>
+
+      <a href="#">
+        Disclaimer
+      </a>
+
+      <a href="#">
+        Sitemap
+      </a>
+
+      <a href="#">
+        Contact
+      </a>
+
+    </div>
+
+    <p>
+      © 2026 QuickFile Tools. All rights reserved.
+    </p>
+
+  </footer>
+
+
+  <script>
+
+    const unlockPdfInput =
+      document.getElementById(
+        "unlockPdfInput"
+      );
+
+
+    const selectUnlockPdfButton =
+      document.getElementById(
+        "selectUnlockPdfButton"
+      );
+
+
+    const unlockFileBox =
+      document.getElementById(
+        "unlockFileBox"
+      );
+
+
+    const unlockFileName =
+      document.getElementById(
+        "unlockFileName"
+      );
+
+
+    const unlockFileSize =
+      document.getElementById(
+        "unlockFileSize"
+      );
+
+
+    const unlockPasswordArea =
+      document.getElementById(
+        "unlockPasswordArea"
+      );
+
+
+    const unlockPassword =
+      document.getElementById(
+        "unlockPassword"
+      );
+
+
+    const toggleUnlockPassword =
+      document.getElementById(
+        "toggleUnlockPassword"
+      );
+
+
+    const unlockPdfButton =
+      document.getElementById(
+        "unlockPdfButton"
+      );
+
+
+    const unlockLoader =
+      document.getElementById(
+        "unlockLoader"
+      );
+
+
+    const unlockStatus =
+      document.getElementById(
+        "unlockStatus"
+      );
+
+
+    let selectedUnlockPdf = null;
+
+
+    selectUnlockPdfButton.addEventListener(
+      "click",
+      () => {
+
+        unlockPdfInput.click();
+
+      }
+    );
+
+
+    unlockPdfInput.addEventListener(
+      "change",
+      () => {
+
+        const file =
+          unlockPdfInput.files[0];
+
+
+        if (!file) {
+          return;
+        }
+
+
+        if (
+          file.type !== "application/pdf" &&
+          !file.name
+            .toLowerCase()
+            .endsWith(".pdf")
+        ) {
+
+          alert(
+            "Please select a PDF file."
+          );
+
+          return;
+
+        }
+
+
+        selectedUnlockPdf =
+          file;
+
+
+        unlockFileName.textContent =
+          file.name;
+
+
+        unlockFileSize.textContent =
+          formatFileSize(
+            file.size
+          );
+
+
+        unlockFileBox.style.display =
+          "block";
+
+
+        unlockPasswordArea.style.display =
+          "block";
+
+
+        unlockPdfButton.style.display =
+          "block";
+
+
+        unlockPassword.value =
+          "";
+
+
+        unlockStatus.textContent =
+          "";
+
+
+        unlockStatus.className =
+          "";
+
+
+        setTimeout(
+          () => {
+
+            unlockPassword.focus();
+
+          },
+          100
+        );
+
+      }
+    );
+
+
+    toggleUnlockPassword.addEventListener(
+      "click",
+      () => {
+
+        if (
+          unlockPassword.type ===
+          "password"
+        ) {
+
+          unlockPassword.type =
+            "text";
+
+          toggleUnlockPassword.textContent =
+            "🙈";
+
+        } else {
+
+          unlockPassword.type =
+            "password";
+
+          toggleUnlockPassword.textContent =
+            "👁️";
+
+        }
+
+      }
+    );
+
+
+    unlockPassword.addEventListener(
+      "keydown",
+      event => {
+
+        if (
+          event.key === "Enter"
+        ) {
+
+          unlockPdfButton.click();
+
+        }
+
+      }
+    );
+
+
+    unlockPdfButton.addEventListener(
+      "click",
+      async () => {
+
+        if (!selectedUnlockPdf) {
+
+          alert(
+            "Please select a PDF file."
+          );
+
+          return;
+
+        }
+
+
+        const password =
+          unlockPassword.value;
+
+
+        if (!password) {
+
+          alert(
+            "Please enter the PDF password."
+          );
+
+          unlockPassword.focus();
+
+          return;
+
+        }
+
+
+        unlockPdfButton.disabled =
+          true;
+
+
+        unlockPdfButton.textContent =
+          "Unlocking...";
+
+
+        unlockLoader.style.display =
+          "block";
+
+
+        unlockStatus.className =
+          "";
+
+
+        unlockStatus.textContent =
+          "Unlocking PDF...";
+
+
+        const formData =
+          new FormData();
+
+
+        formData.append(
+          "file",
+          selectedUnlockPdf
+        );
+
+
+        formData.append(
+          "password",
+          password
+        );
+
+
+        try {
+
+          const response =
+            await fetch(
+              "http://127.0.0.1:8001/unlock-pdf",
+              {
+                method: "POST",
+                body: formData
+              }
+            );
+
+
+          if (!response.ok) {
+
+            let message =
+              "Unable to unlock PDF.";
+
+
+            try {
+
+              const errorData =
+                await response.json();
+
+
+              if (
+                errorData.detail
+              ) {
+
+                message =
+                  errorData.detail;
+
+              }
+
+            } catch (error) {
+            }
+
+
+            throw new Error(
+              message
+            );
+
+          }
+
+
+          const blob =
+            await response.blob();
+
+
+          const url =
+            URL.createObjectURL(
+              blob
+            );
+
+
+          const link =
+            document.createElement(
+              "a"
+            );
+
+
+          const cleanName =
+            selectedUnlockPdf.name.replace(
+              /\.pdf$/i,
+              ""
+            );
+
+
+          link.href =
+            url;
+
+
+          link.download =
+            cleanName +
+            "-unlocked.pdf";
+
+
+          document.body.appendChild(
+            link
+          );
+
+
+          link.click();
+
+
+          link.remove();
+
+
+          setTimeout(
+            () => {
+
+              URL.revokeObjectURL(
+                url
+              );
+
+            },
+            1500
+          );
+
+
+          unlockStatus.className =
+            "unlock-success";
+
+
+          unlockStatus.textContent =
+            "PDF unlocked and downloaded successfully.";
+
+
+        } catch (error) {
+
+          console.error(
+            error
+          );
+
+
+          unlockStatus.className =
+            "unlock-error";
+
+
+          unlockStatus.textContent =
+            error.message;
+
+
+        } finally {
+
+          unlockPdfButton.disabled =
+            false;
+
+
+          unlockPdfButton.textContent =
+            "Unlock & Download PDF";
+
+
+          unlockLoader.style.display =
+            "none";
+
+        }
+
+      }
+    );
+
+
+    function formatFileSize(
+      bytes
+    ) {
+
+      if (
+        bytes < 1024
+      ) {
+
+        return bytes + " B";
+
+      }
+
+
+      if (
+        bytes <
+        1024 * 1024
+      ) {
+
+        return (
+          bytes / 1024
+        ).toFixed(1) +
+        " KB";
+
+      }
+
+
+      return (
+        bytes /
+        (
+          1024 *
+          1024
+        )
+      ).toFixed(2) +
+      " MB";
+
+    }
+
+  </script>
+
+</body>
+
+</html>

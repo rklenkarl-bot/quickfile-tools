@@ -1,0 +1,398 @@
+<!-- =====================================================
+     QUICKFILE TOOLS - ALL TOOLS PAGE
+     Function: Sabhi tools ko category-wise cards ke form me dikhata hai
+     Search Name: QUICKFILE ALL TOOLS PAGE
+     ===================================================== -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Tools - QuickFile Tools</title>
+
+  <!-- =====================================================
+       QUICKFILE TOOLS - CSS FILE CONNECTION
+       Function: All Tools page ko main style.css se connect karta hai
+       Search Name: QUICKFILE ALL TOOLS CSS CONNECTION
+       ===================================================== -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- =====================================================
+       QUICKFILE TOOLS - ALL TOOLS TOP HEADER
+       Function: Logo aur main navigation menu dikhata hai
+       Search Name: QUICKFILE ALL TOOLS HEADER
+       ===================================================== -->
+
+  <header class="main-header">
+
+    <div class="brand">
+      <div class="brand-logo">QF</div>
+
+      <div class="brand-text">
+        <h1>QuickFile Tools</h1>
+        <p>Fast, Free & Easy Online File Tools</p>
+      </div>
+    </div>
+
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="all-tools.html" class="active">All Tools</a>
+      <a href="#">About Us</a>
+      <a href="#">Blog</a>
+      <a href="#">Contact</a>
+    </nav>
+
+    <div class="header-actions">
+      <button class="theme-button" type="button">☾</button>
+
+      <button class="language-button" type="button">
+        🌐 English ▼
+      </button>
+    </div>
+
+  </header>
+
+  <!-- =====================================================
+       QUICKFILE TOOLS - ALL TOOLS HERO
+       Function: All Tools page ka title aur description
+       Search Name: QUICKFILE ALL TOOLS HERO
+       ===================================================== -->
+
+  <section class="all-tools-hero">
+    <h2>All Your File Tools in One Place</h2>
+    <p>
+      Convert, compress, organize, edit, secure and manage your files
+      with our collection of online tools.
+    </p>
+  </section>
+
+  <!-- =====================================================
+       QUICKFILE TOOLS - CATEGORY FILTER BUTTONS
+       Function: Tools ko category ke hisaab se filter karne ke buttons
+       Search Name: QUICKFILE TOOL FILTERS
+       ===================================================== -->
+
+  <section class="tools-filter-section">
+
+    <div class="filter-buttons">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="organize">Organize PDF</button>
+      <button class="filter-btn" data-filter="optimize">Optimize PDF</button>
+      <button class="filter-btn" data-filter="convert">Convert PDF</button>
+      <button class="filter-btn" data-filter="edit">Edit PDF</button>
+      <button class="filter-btn" data-filter="security">PDF Security</button>
+      <button class="filter-btn" data-filter="scan">Scan & OCR</button>
+      <button class="filter-btn" data-filter="ai">AI PDF</button>
+    </div>
+
+  </section>
+
+  <!-- =====================================================
+       QUICKFILE TOOLS - ALL TOOLS GRID
+       Function: Sabhi tools ko cards ke form me show karta hai
+       Search Name: QUICKFILE ALL TOOLS GRID
+       ===================================================== -->
+
+  <section class="all-tools-section">
+
+    <div class="all-tools-grid">
+
+      <!-- MERGE PDF -->
+<div
+  class="all-tool-card"
+  data-category="organize"
+  onclick="window.location.href='merge-pdf.html'"
+  style="cursor: pointer;"
+>        <div class="all-tool-icon">📑</div>
+        <h3>Merge PDF</h3>
+        <p>Combine multiple PDF files into one document.</p>
+      </div>
+
+      <!-- SPLIT PDF -->
+      <div
+  class="all-tool-card"
+  data-category="organize"
+  onclick="window.location.href='split-pdf.html'"
+  style="cursor: pointer;"
+>
+        <div class="all-tool-icon">✂️</div>
+        <h3>Split PDF</h3>
+        <p>Separate PDF pages into individual PDF files.</p>
+      </div>
+
+      <!-- COMPRESS PDF -->
+<div
+  class="all-tool-card"
+  data-category="optimize"
+  onclick="window.location.href='compress-pdf.html'"
+  style="cursor: pointer;"
+>        <div class="all-tool-icon">🗜️</div>
+        <h3>Compress PDF</h3>
+        <p>Reduce PDF file size while keeping good quality.</p>
+      </div>
+
+      <!-- PDF TO WORD -->
+<div
+  class="all-tool-card"
+  data-category="convert"
+  onclick="window.location.href='pdf-to-word.html'"
+  style="cursor: pointer;"
+>        <div class="all-tool-icon">🟦</div>
+        <h3>PDF to Word</h3>
+        <p>Convert PDF files into editable Word documents.</p>
+      </div>
+
+      <!-- PDF TO POWERPOINT -->
+      <div
+  class="all-tool-card"
+  data-category="convert"
+  onclick="window.location.href='pdf-to-powerpoint.html'"
+  style="cursor: pointer;"
+>
+        <div class="all-tool-icon">🟧</div>
+        <h3>PDF to PowerPoint</h3>
+        <p>Convert PDF files into PowerPoint presentations.</p>
+      </div>
+
+      <!-- PDF TO EXCEL -->
+     <div
+  class="all-tool-card"
+  data-category="convert"
+  onclick="window.location.href='pdf-to-excel.html'"
+  style="cursor: pointer;"
+>
+        <div class="all-tool-icon">🟩</div>
+        <h3>PDF to Excel</h3>
+        <p>Convert PDF tables and data into Excel spreadsheets.</p>
+      </div>
+
+      <!-- WORD TO PDF -->
+      <div class="all-tool-card" data-category="convert" onclick="window.location.href='word-to-pdf.html'">
+        <div class="all-tool-icon">W</div>
+        <h3>Word to PDF</h3>
+        <p>Convert Word documents into PDF files.</p>
+      </div>
+
+      <!-- POWERPOINT TO PDF -->
+      <div class="all-tool-card" data-category="convert">
+        <div class="all-tool-icon">P</div>
+        <h3>PowerPoint to PDF</h3>
+        <p>Convert PowerPoint presentations into PDF files.</p>
+      </div>
+
+      <!-- EXCEL TO PDF -->
+      <div class="all-tool-card" data-category="convert">
+        <div class="all-tool-icon">X</div>
+        <h3>Excel to PDF</h3>
+        <p>Convert Excel spreadsheets into PDF documents.</p>
+      </div>
+
+      <!-- EDIT PDF -->
+      <div class="all-tool-card" data-category="edit">
+        <div class="all-tool-icon">✏️</div>
+        <h3>Edit PDF</h3>
+        <p>Add text, images and annotations to PDF files.</p>
+      </div>
+
+      <!-- PDF TO JPG -->
+      <div
+          class="all-tool-card"
+          data-category="convert"
+          onclick="window.location.href='pdf-to-jpg.html'"
+          style="cursor: pointer;"
+>
+        <div class="all-tool-icon">🖼️</div>
+        <h3>PDF to JPG</h3>
+        <p>Convert PDF pages into high-quality JPG images.</p>
+      </div>
+
+      <!-- JPG TO PDF -->
+     <div
+  class="all-tool-card"
+  data-category="convert"
+  onclick="window.location.href='jpg-to-pdf.html'"
+  style="cursor: pointer;"
+>
+        <div class="all-tool-icon">📄</div>
+        <h3>JPG to PDF</h3>
+        <p>Convert JPG images into a PDF document.</p>
+      </div>
+
+      <!-- SIGN PDF -->
+     <div
+  class="all-tool-card"
+  data-category="security"
+  onclick="window.location.href='sign-pdf.html'"
+  style="cursor: pointer;"
+>
+        <div class="all-tool-icon">✍️</div>
+        <h3>Sign PDF</h3>
+        <p>Add your signature to PDF files.</p>
+      </div>
+
+      <!-- WATERMARK PDF -->
+     <div
+  class="all-tool-card"
+  data-category="edit"
+  onclick="window.location.href='watermark-pdf.html'"
+  style="cursor: pointer;"
+>
+        <div class="all-tool-icon">💧</div>
+        <h3>Watermark PDF</h3>
+        <p>Add text or image watermarks to PDF files.</p>
+      </div>
+
+      <!-- ROTATE PDF -->
+      <div
+  class="all-tool-card"
+  data-category="organize"
+  onclick="window.location.href='rotate-pdf.html'"
+  style="cursor: pointer;"
+>
+        <div class="all-tool-icon">🔄</div>
+        <h3>Rotate PDF</h3>
+        <p>Rotate PDF pages to the correct orientation.</p>
+      </div>
+
+      <!-- HTML TO PDF -->
+      <div class="all-tool-card" data-category="convert">
+        <div class="all-tool-icon">HTML</div>
+        <h3>HTML to PDF</h3>
+        <p>Convert HTML pages into PDF files.</p>
+      </div>
+
+      <!-- UNLOCK PDF -->
+      <div
+  class="all-tool-card"
+  data-category="security"
+  onclick="window.location.href='unlock-pdf.html'"
+  style="cursor: pointer;"
+>
+        <div class="all-tool-icon">🔓</div>
+        <h3>Unlock PDF</h3>
+        <p>Remove supported PDF password restrictions.</p>
+      </div>
+
+      <!-- PROTECT PDF -->
+      <div
+  class="all-tool-card"
+  data-category="security"
+  onclick="window.location.href='protect-pdf.html'"
+  style="cursor: pointer;"
+>
+        <div class="all-tool-icon">🔒</div>
+        <h3>Protect PDF</h3>
+        <p>Protect your PDF files with a password.</p>
+      </div>
+
+      <!-- ORGANIZE PDF -->
+      <div class="all-tool-card" data-category="organize">
+        <div class="all-tool-icon">🗂️</div>
+        <h3>Organize PDF</h3>
+        <p>Reorder, delete or arrange PDF pages.</p>
+      </div>
+
+      <!-- PDF TO PDF/A -->
+      <div class="all-tool-card" data-category="convert">
+        <div class="all-tool-icon">A</div>
+        <h3>PDF to PDF/A</h3>
+        <p>Convert PDF files to archival PDF/A format.</p>
+      </div>
+
+      <!-- REPAIR PDF -->
+      <div class="all-tool-card" data-category="optimize">
+        <div class="all-tool-icon">🛠️</div>
+        <h3>Repair PDF</h3>
+        <p>Repair damaged or corrupted PDF files.</p>
+      </div>
+
+      <!-- PAGE NUMBERS -->
+      <div class="all-tool-card" data-category="edit">
+        <div class="all-tool-icon">123</div>
+        <h3>Page Numbers</h3>
+        <p>Add page numbers to your PDF documents.</p>
+      </div>
+
+      <!-- SCAN TO PDF -->
+      <div class="all-tool-card" data-category="scan">
+        <div class="all-tool-icon">📷</div>
+        <h3>Scan to PDF</h3>
+        <p>Turn scanned documents or images into PDF files.</p>
+      </div>
+
+      <!-- OCR PDF -->
+      <div class="all-tool-card" data-category="scan">
+        <div class="all-tool-icon">OCR</div>
+        <h3>OCR PDF</h3>
+        <p>Extract searchable text from scanned PDF documents.</p>
+      </div>
+
+      <!-- COMPARE PDF -->
+      <div class="all-tool-card" data-category="edit">
+        <div class="all-tool-icon">⚖️</div>
+        <h3>Compare PDF</h3>
+        <p>Compare two PDF documents and find differences.</p>
+      </div>
+
+      <!-- REDACT PDF -->
+      <div class="all-tool-card" data-category="security">
+        <div class="all-tool-icon">⬛</div>
+        <h3>Redact PDF</h3>
+        <p>Remove sensitive text and content from PDF files.</p>
+      </div>
+
+      <!-- CROP PDF -->
+      <div class="all-tool-card" data-category="edit">
+        <div class="all-tool-icon">✂</div>
+        <h3>Crop PDF</h3>
+        <p>Crop PDF margins or specific page areas.</p>
+      </div>
+
+      <!-- PDF FORMS -->
+      <div class="all-tool-card" data-category="edit">
+        <div class="all-tool-icon">📝</div>
+        <h3>PDF Forms</h3>
+        <p>Create and fill PDF form fields.</p>
+      </div>
+
+      <!-- AI SUMMARIZER -->
+      <div class="all-tool-card" data-category="ai">
+        <div class="all-tool-icon">AI</div>
+        <h3>AI Summarizer</h3>
+        <p>Generate short summaries from PDF documents.</p>
+      </div>
+
+      <!-- TRANSLATE PDF -->
+      <div class="all-tool-card" data-category="ai">
+        <div class="all-tool-icon">🌐</div>
+        <h3>Translate PDF</h3>
+        <p>Translate PDF document text into other languages.</p>
+      </div>
+
+      <!-- PDF TO MARKDOWN -->
+      <div class="all-tool-card" data-category="convert">
+        <div class="all-tool-icon">MD</div>
+        <h3>PDF to Markdown</h3>
+        <p>Convert PDF content into Markdown format.</p>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       QUICKFILE TOOLS - JAVASCRIPT FILE CONNECTION
+       Function: All Tools filters aur future interactions ke liye
+       Search Name: QUICKFILE ALL TOOLS JS CONNECTION
+       ===================================================== -->
+
+  <script src="script.js"></script>
+
+</body>
+</html>

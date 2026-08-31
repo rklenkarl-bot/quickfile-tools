@@ -1,0 +1,288 @@
+<!-- =====================================================
+     QUICKFILE TOOLS - MAIN HOME PAGE BASIC STRUCTURE
+     Function: Website ka main HTML structure
+     ===================================================== -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuickFile Tools</title>
+  <!-- =====================================================
+     QUICKFILE TOOLS - CSS FILE CONNECTION
+     Function: Website design/style ko index.html se connect karta hai
+     ===================================================== -->
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+ <!-- =====================================================
+     QUICKFILE TOOLS - TOP HEADER / NAVIGATION BAR
+     Function: Logo, website name aur main navigation menu
+     Search Name: QUICKFILE HEADER
+     ===================================================== -->
+
+<header class="main-header">
+
+  <!-- QUICKFILE HEADER - LOGO & WEBSITE NAME -->
+  <div class="brand">
+    <div class="brand-logo">QF</div>
+
+    <div class="brand-text">
+      <h1>QuickFile Tools</h1>
+      <p>Fast, Free & Easy Online File Tools</p>
+    </div>
+  </div>
+
+  <!-- QUICKFILE HEADER - MAIN MENU -->
+  <nav class="main-nav">
+    <a href="#" class="active">Home</a>
+    <a href="all-tools.html">All Tools</a>
+    <a href="#">About Us</a>
+    <a href="#">Blog</a>
+    <a href="#">Contact</a>
+  </nav>
+
+  <!-- QUICKFILE HEADER - RIGHT SIDE OPTIONS -->
+  <div class="header-actions">
+    <button class="theme-button" type="button">☾</button>
+
+    <button class="language-button" type="button">
+      🌐 English ▼
+    </button>
+  </div>
+
+</header>
+<!-- =====================================================
+     QUICKFILE TOOLS - HERO SECTION
+     Function: Main heading, description aur tool search box
+     Search Name: QUICKFILE HERO
+     ===================================================== -->
+
+<section class="hero-section">
+
+  <!-- QUICKFILE HERO - MAIN HEADING -->
+  <div class="hero-content">
+    <h2>All Your File Tools in One Place</h2>
+
+    <p>
+      Convert, compress, merge, split and manage your files
+      quickly, securely and completely free.
+    </p>
+
+    <!-- QUICKFILE HERO - SEARCH TOOL BOX -->
+    <div class="tool-search-box">
+      <span class="search-icon">🔍</span>
+
+      <input
+        type="text"
+        id="toolSearch"
+        placeholder="Search tools... e.g. PDF to JPG"
+      >
+
+      <button type="button" id="searchButton">
+        Search
+      </button>
+    </div>
+  </div>
+
+</section>
+<!-- =====================================================
+     QUICKFILE TOOLS - POPULAR TOOLS SECTION
+     Function: Homepage par sabse popular 6 file tools dikhata hai
+     Search Name: QUICKFILE POPULAR TOOLS
+     ===================================================== -->
+
+<section class="popular-tools-section">
+
+  <!-- QUICKFILE POPULAR TOOLS - SECTION HEADING -->
+  <div class="section-heading">
+    <h2>Popular Tools</h2>
+    <p>Quick access to our most used file tools</p>
+  </div>
+
+  <!-- QUICKFILE POPULAR TOOLS - TOOL CARDS -->
+  <div class="tools-grid">
+
+    <!-- TOOL 1 - PDF TO JPG -->
+    <div class="tool-card">
+      <div class="tool-icon">📄</div>
+      <h3>PDF to JPG</h3>
+      <p>Convert PDF pages into high-quality JPG images.</p>
+     <button type="button" onclick="window.location.href='pdf-to-jpg.html'">
+  Use Tool →
+</button>
+    </div>
+
+    <!-- TOOL 2 - JPG TO PDF -->
+    <div class="tool-card">
+      <div class="tool-icon">🖼️</div>
+      <h3>JPG to PDF</h3>
+      <p>Turn your JPG images into a single PDF file.</p>
+     <button type="button" onclick="window.location.href='jpg-to-pdf.html'">
+  Use Tool →
+</button>
+    </div>
+
+    <!-- TOOL 3 - MERGE PDF -->
+    <div class="tool-card">
+      <div class="tool-icon">📑</div>
+      <h3>Merge PDF</h3>
+      <p>Combine multiple PDF files into one document.</p>
+     <button type="button" onclick="window.location.href='merge-pdf.html'">
+  Use Tool →
+</button>
+    </div>
+
+    <!-- TOOL 4 - SPLIT PDF -->
+    <div class="tool-card">
+      <div class="tool-icon">✂️</div>
+      <h3>Split PDF</h3>
+      <p>Separate PDF pages into individual PDF files.</p>
+      <button type="button" onclick="window.location.href='split-pdf.html'">
+  Use Tool →
+</button>
+    </div>
+
+    <!-- TOOL 5 - COMPRESS PDF -->
+    <div class="tool-card">
+      <div class="tool-icon">🗜️</div>
+      <h3>Compress PDF</h3>
+      <p>Reduce PDF file size while keeping good quality.</p>
+<button type="button" onclick="window.location.href='compress-pdf.html'">
+  Use Tool →
+</button>    </div>
+
+    <!-- TOOL 6 - IMAGE COMPRESSOR -->
+    <div class="tool-card">
+      <div class="tool-icon">⚡</div>
+      <h3>Image Compressor</h3>
+      <p>Compress images quickly without losing clarity.</p>
+      <button type="button">Use Tool →</button>
+    </div>
+
+  </div>
+
+</section>
+<!-- =====================================================
+     QUICKFILE TOOLS - WHY QUICKFILE TOOLS SECTION
+     Function: Website ke main benefits dikhata hai:
+     Free, Secure, Fast aur All Devices
+     Search Name: QUICKFILE WHY US
+     ===================================================== -->
+
+<section class="why-us-section">
+
+  <!-- QUICKFILE WHY US - SECTION HEADING -->
+  <div class="section-heading">
+    <h2>Why QuickFile Tools?</h2>
+    <p>Simple, secure and powerful tools for your everyday files.</p>
+  </div>
+
+  <!-- QUICKFILE WHY US - FEATURE CARDS -->
+  <div class="features-grid">
+
+    <!-- FEATURE 1 - FREE -->
+    <div class="feature-card">
+      <div class="feature-icon">✓</div>
+      <h3>100% Free</h3>
+      <p>Use our essential file tools without paying anything.</p>
+    </div>
+
+    <!-- FEATURE 2 - SECURE -->
+    <div class="feature-card">
+      <div class="feature-icon">🔒</div>
+      <h3>Secure & Private</h3>
+      <p>Your files are handled with privacy and security in mind.</p>
+    </div>
+
+    <!-- FEATURE 3 - FAST -->
+    <div class="feature-card">
+      <div class="feature-icon">⚡</div>
+      <h3>Fast Processing</h3>
+      <p>Convert and manage your files quickly and easily.</p>
+    </div>
+
+    <!-- FEATURE 4 - ALL DEVICES -->
+    <div class="feature-card">
+      <div class="feature-icon">📱</div>
+      <h3>Works Everywhere</h3>
+      <p>Use QuickFile Tools on mobile, tablet and computer.</p>
+    </div>
+
+  </div>
+
+</section>
+<!-- =====================================================
+     QUICKFILE TOOLS - FOOTER SECTION
+     Function: Website ke bottom me About, Quick Links,
+     Popular Tools, Legal aur copyright information dikhata hai
+     Search Name: QUICKFILE FOOTER
+     ===================================================== -->
+
+<footer class="main-footer">
+
+  <div class="footer-grid">
+
+    <!-- QUICKFILE FOOTER - ABOUT -->
+    <div class="footer-column">
+      <h3>QuickFile Tools</h3>
+      <p>
+        Fast, free and easy online file tools for PDF,
+        images and everyday documents.
+      </p>
+    </div>
+
+    <!-- QUICKFILE FOOTER - QUICK LINKS -->
+    <div class="footer-column">
+      <h4>Quick Links</h4>
+      <a href="#">Home</a>
+      <a href="#">All Tools</a>
+      <a href="#">About Us</a>
+      <a href="#">Blog</a>
+      <a href="#">Contact</a>
+    </div>
+
+    <!-- QUICKFILE FOOTER - POPULAR TOOLS -->
+    <div class="footer-column">
+      <h4>Popular Tools</h4>
+      <a href="#">PDF to JPG</a>
+      <a href="#">JPG to PDF</a>
+      <a href="#">Merge PDF</a>
+      <a href="#">Split PDF</a>
+      <a href="#">Compress PDF</a>
+    </div>
+
+    <!-- QUICKFILE FOOTER - LEGAL -->
+    <div class="footer-column">
+      <h4>Legal</h4>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms & Conditions</a>
+      <a href="#">Disclaimer</a>
+      <a href="#">DMCA Policy</a>
+    </div>
+
+  </div>
+
+  <!-- QUICKFILE FOOTER - COPYRIGHT -->
+  <div class="footer-bottom">
+    <p>© 2026 QuickFile Tools. All rights reserved.</p>
+  </div>
+
+</footer>
+
+<!-- =====================================================
+     QUICKFILE TOOLS - JAVASCRIPT FILE CONNECTION
+     Function: Website ke buttons, search aur tools ke
+     interactive functions ko script.js se connect karta hai
+     ===================================================== -->
+
+<script src="script.js"></script>
+
+</body>
+
+</html>

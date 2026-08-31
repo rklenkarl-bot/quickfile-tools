@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Rotate PDF Online Free | QuickFile Tools</title>
+
+  <meta
+    name="description"
+    content="Rotate PDF pages online for free. Rotate individual pages or all pages left or right and download your corrected PDF."
+  >
+
+  <link rel="stylesheet" href="style.css">
+
+  <!-- PDF.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+  <!-- PDF-Lib -->
+  <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
+
+  <style>
+    .rotate-editor {
+      display: none;
+      width: 100%;
+      max-width: 900px;
+      margin: 25px auto 0;
+    }
+
+    .rotate-page-toolbar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .rotate-page-toolbar button {
+      padding: 9px 16px;
+      border: 1px solid #d5d9e0;
+      border-radius: 8px;
+      background: white;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .rotate-page-toolbar button:hover {
+      background: #f4f6f8;
+    }
+
+    .rotate-page-toolbar button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    #rotatePageInfo {
+      min-width: 110px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .rotate-preview-area {
+      width: 100%;
+      overflow: auto;
+      text-align: center;
+      padding: 15px;
+      box-sizing: border-box;
+    }
+
+    .rotate-canvas-wrapper {
+      display: inline-block;
+      background: white;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.16);
+      line-height: 0;
+    }
+
+    #rotatePdfCanvas {
+      display: block;
+      max-width: 100%;
+    }
+
+    .rotate-controls {
+      max-width: 650px;
+      margin: 22px auto 0;
+      padding: 20px;
+      background: #ffffff;
+      border: 1px solid #e0e4e9;
+      border-radius: 12px;
+    }
+
+    .rotate-controls h3 {
+      margin-top: 0;
+      text-align: center;
+    }
+
+    .rotate-scope {
+      margin-bottom: 18px;
+    }
+
+    .rotate-scope label {
+      display: block;
+      margin-bottom: 7px;
+      font-weight: 600;
+    }
+
+    .rotate-scope select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccd2da;
+      border-radius: 8px;
+      background: white;
+      box-sizing: border-box;
+    }
+
+    .rotate-buttons {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .rotate-control-button {
+      padding: 12px 10px;
+      border: 1px solid #d4d9e0;
+      border-radius: 8px;
+      background: white;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .rotate-control-button:hover {
+      background: #f3f6fa;
+    }
+
+    .rotate-control-button span {
+      display: block;
+      font-size: 24px;
+      margin-bottom: 5px;
+    }
+
+    .rotate-current-info {
+      text-align: center;
+      margin-top: 15px;
+      font-weight: 600;
+    }
+
+    #rotateDownloadButton {
+      display: block;
+      margin: 22px auto 0;
+    }
+
+    #rotateStatus {
+      min-height: 24px;
+      margin-top: 12px;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    @media (max-width: 650px) {
+      .rotate-buttons {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="main-header">
+
+    <div class="brand">
+
+      <div class="brand-logo">
+        QF
+      </div>
+
+      <div class="brand-text">
+        <h1>QuickFile Tools</h1>
+        <p>Fast, Free & Easy Online File Tools</p>
+      </div>
+
+    </div>
+
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="all-tools.html">All Tools</a>
+      <a href="#">About Us</a>
+      <a href="#">Blog</a>
+      <a href="#">Contact</a>
+    </nav>
+
+  </header>
+
+
+  <!-- HERO -->
+  <section class="merge-pdf-hero">
+
+    <h2>Rotate PDF</h2>
+
+    <p>
+      Rotate PDF pages left or right and download the corrected PDF.
+    </p>
+
+  </section>
+
+
+  <!-- TOOL -->
+  <section class="merge-pdf-tool-section">
+
+    <div class="merge-upload-box">
+
+      <div class="merge-upload-icon">
+        🔄
+      </div>
+
+      <h3>Select PDF File</h3>
+
+      <p>
+        Choose a PDF and rotate one page or all pages.
+      </p>
+
+      <input
+        type="file"
+        id="rotatePdfInput"
+        accept="application/pdf"
+        hidden
+      >
+
+      <button
+        type="button"
+        id="selectRotatePdfButton"
+        class="merge-select-button"
+      >
+        Select PDF File
+      </button>
+
+      <div
+        id="rotatePdfFileList"
+        class="merge-file-list"
+      ></div>
+
+
+      <!-- EDITOR -->
+      <div
+        id="rotateEditor"
+        class="rotate-editor"
+      >
+
+        <div class="rotate-page-toolbar">
+
+          <button
+            type="button"
+            id="rotatePreviousPage"
+          >
+            ← Previous
+          </button>
+
+          <span id="rotatePageInfo">
+            Page 1 / 1
+          </span>
+
+          <button
+            type="button"
+            id="rotateNextPage"
+          >
+            Next →
+          </button>
+
+        </div>
+
+
+        <div class="rotate-preview-area">
+
+          <div class="rotate-canvas-wrapper">
+
+            <canvas id="rotatePdfCanvas"></canvas>
+
+          </div>
+
+        </div>
+
+
+        <div class="rotate-controls">
+
+          <h3>Rotation Settings</h3>
+
+          <div class="rotate-scope">
+
+            <label for="rotateApplyTo">
+              Apply Rotation To
+            </label>
+
+            <select id="rotateApplyTo">
+
+              <option value="current">
+                Current Page Only
+              </option>
+
+              <option value="all">
+                All Pages
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="rotate-buttons">
+
+            <button
+              type="button"
+              id="rotateLeftButton"
+              class="rotate-control-button"
+            >
+              <span>↶</span>
+              Rotate Left 90°
+            </button>
+
+
+            <button
+              type="button"
+              id="rotateRightButton"
+              class="rotate-control-button"
+            >
+              <span>↷</span>
+              Rotate Right 90°
+            </button>
+
+
+            <button
+              type="button"
+              id="rotateResetButton"
+              class="rotate-control-button"
+            >
+              <span>⟳</span>
+              Reset
+            </button>
+
+          </div>
+
+
+          <div
+            id="rotateCurrentInfo"
+            class="rotate-current-info"
+          >
+            Current page rotation: 0°
+          </div>
+
+        </div>
+
+
+        <button
+          type="button"
+          id="rotateDownloadButton"
+          class="merge-action-button"
+          disabled
+        >
+          Rotate & Download PDF
+        </button>
+
+
+        <div id="rotateStatus"></div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- HOW TO USE -->
+  <section class="merge-info-section">
+
+    <div class="merge-info-card">
+
+      <h2>How to Rotate a PDF</h2>
+
+      <div class="merge-steps-grid">
+
+        <div class="merge-step">
+
+          <div class="merge-step-icon">
+            📁
+          </div>
+
+          <h3>1. Select PDF</h3>
+
+          <p>
+            Choose the PDF file you want to rotate.
+          </p>
+
+        </div>
+
+
+        <div class="merge-step">
+
+          <div class="merge-step-icon">
+            📄
+          </div>
+
+          <h3>2. Choose Pages</h3>
+
+          <p>
+            Select the current page or all pages.
+          </p>
+
+        </div>
+
+
+        <div class="merge-step">
+
+          <div class="merge-step-icon">
+            🔄
+          </div>
+
+          <h3>3. Rotate</h3>
+
+          <p>
+            Rotate pages left or right in 90-degree steps.
+          </p>
+
+        </div>
+
+
+        <div class="merge-step">
+
+          <div class="merge-step-icon">
+            ⬇️
+          </div>
+
+          <h3>4. Download</h3>
+
+          <p>
+            Download your corrected PDF instantly.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ABOUT -->
+  <section class="merge-about-section">
+
+    <div class="merge-about-card">
+
+      <div class="merge-about-icon">
+        🔄
+      </div>
+
+      <div class="merge-about-content">
+
+        <h2>About Rotate PDF</h2>
+
+        <p>
+          Rotate PDF pages that are sideways or upside down.
+          You can rotate individual pages or the entire document.
+        </p>
+
+        <p>
+          Preview every page before downloading your corrected PDF.
+        </p>
+
+      </div>
+
+
+      <div class="merge-about-points">
+
+        <p>✓ Rotate Left 90°</p>
+        <p>✓ Rotate Right 90°</p>
+        <p>✓ Individual Page Rotation</p>
+        <p>✓ Rotate All Pages</p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- TRUST -->
+  <section class="merge-trust-section">
+
+    <div class="merge-trust-grid">
+
+      <div class="merge-trust-card">
+
+        <div class="merge-trust-icon">
+          🛡️
+        </div>
+
+        <h3>Private</h3>
+
+        <p>
+          Your PDF is processed directly in your browser.
+        </p>
+
+      </div>
+
+
+      <div class="merge-trust-card">
+
+        <div class="merge-trust-icon">
+          👁️
+        </div>
+
+        <h3>PDF Preview</h3>
+
+        <p>
+          Check page orientation before downloading.
+        </p>
+
+      </div>
+
+
+      <div class="merge-trust-card">
+
+        <div class="merge-trust-icon">
+          ⚡
+        </div>
+
+        <h3>Fast</h3>
+
+        <p>
+          Rotate pages quickly without uploading them to a server.
+        </p>
+
+      </div>
+
+
+      <div class="merge-trust-card">
+
+        <div class="merge-trust-icon">
+          📄
+        </div>
+
+        <h3>Flexible</h3>
+
+        <p>
+          Rotate one page or every page in the document.
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- FAQ -->
+  <section class="merge-faq-section">
+
+    <div class="merge-faq-container">
+
+      <div class="section-heading">
+
+        <h2>Frequently Asked Questions</h2>
+
+        <p>
+          Common questions about rotating PDF files.
+        </p>
+
+      </div>
+
+
+      <div class="merge-faq-item">
+
+        <h3>
+          Can I rotate only one PDF page?
+        </h3>
+
+        <p>
+          Yes. Choose Current Page Only and rotate the selected page.
+        </p>
+
+      </div>
+
+
+      <div class="merge-faq-item">
+
+        <h3>
+          Can I rotate all pages at once?
+        </h3>
+
+        <p>
+          Yes. Select All Pages before using the rotate buttons.
+        </p>
+
+      </div>
+
+
+      <div class="merge-faq-item">
+
+        <h3>
+          Can different pages have different rotations?
+        </h3>
+
+        <p>
+          Yes. Select Current Page Only, navigate through the PDF
+          and rotate each page independently.
+        </p>
+
+      </div>
+
+
+      <div class="merge-faq-item">
+
+        <h3>
+          Will the rotation remain after download?
+        </h3>
+
+        <p>
+          Yes. The selected rotations are saved into the downloaded PDF.
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- FOOTER -->
+  <footer class="merge-page-footer">
+
+    <div class="merge-footer-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Use</a>
+      <a href="#">Disclaimer</a>
+      <a href="#">Sitemap</a>
+      <a href="#">Contact</a>
+    </div>
+
+    <p>
+      © 2026 QuickFile Tools. All rights reserved.
+    </p>
+
+  </footer>
+
+
+  <script>
+
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+      "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+
+
+    const rotatePdfInput =
+      document.getElementById("rotatePdfInput");
+
+    const selectRotatePdfButton =
+      document.getElementById("selectRotatePdfButton");
+
+    const rotatePdfFileList =
+      document.getElementById("rotatePdfFileList");
+
+    const rotateEditor =
+      document.getElementById("rotateEditor");
+
+    const rotatePdfCanvas =
+      document.getElementById("rotatePdfCanvas");
+
+    const rotatePreviousPage =
+      document.getElementById("rotatePreviousPage");
+
+    const rotateNextPage =
+      document.getElementById("rotateNextPage");
+
+    const rotatePageInfo =
+      document.getElementById("rotatePageInfo");
+
+    const rotateApplyTo =
+      document.getElementById("rotateApplyTo");
+
+    const rotateLeftButton =
+      document.getElementById("rotateLeftButton");
+
+    const rotateRightButton =
+      document.getElementById("rotateRightButton");
+
+    const rotateResetButton =
+      document.getElementById("rotateResetButton");
+
+    const rotateCurrentInfo =
+      document.getElementById("rotateCurrentInfo");
+
+    const rotateDownloadButton =
+      document.getElementById("rotateDownloadButton");
+
+    const rotateStatus =
+      document.getElementById("rotateStatus");
+
+
+    let selectedPdfFile = null;
+
+    let pdfJsDocument = null;
+
+    let currentPageNumber = 1;
+
+    let totalPages = 0;
+
+    let pageRotations = [];
+
+
+    selectRotatePdfButton.addEventListener(
+      "click",
+      () => {
+        rotatePdfInput.click();
+      }
+    );
+
+
+    rotatePdfInput.addEventListener(
+      "change",
+      async () => {
+
+        const file =
+          rotatePdfInput.files[0];
+
+        if (!file) {
+          return;
+        }
+
+
+        if (
+          file.type !== "application/pdf" &&
+          !file.name.toLowerCase().endsWith(".pdf")
+        ) {
+
+          alert("Please select a PDF file.");
+          return;
+
+        }
+
+
+        selectedPdfFile = file;
+
+        rotatePdfFileList.textContent =
+          file.name;
+
+        rotateStatus.textContent =
+          "Loading PDF preview...";
+
+
+        try {
+
+          const bytes =
+            new Uint8Array(
+              await file.arrayBuffer()
+            );
+
+
+          pdfJsDocument =
+            await pdfjsLib
+              .getDocument({
+                data: bytes
+              })
+              .promise;
+
+
+          totalPages =
+            pdfJsDocument.numPages;
+
+          currentPageNumber = 1;
+
+
+          /*
+            Each value stores the EXTRA rotation
+            selected by the user.
+          */
+          pageRotations =
+            new Array(totalPages).fill(0);
+
+
+          rotateEditor.style.display =
+            "block";
+
+          rotateDownloadButton.disabled =
+            false;
+
+
+          await renderRotatePage();
+
+
+          rotateStatus.textContent =
+            "PDF loaded. Choose the pages and rotation.";
+
+        } catch (error) {
+
+          console.error(error);
+
+          rotateStatus.textContent =
+            "PDF could not be loaded.";
+
+        }
+
+      }
+    );
+
+
+    function normalizeRotation(value) {
+
+      let rotation =
+        value % 360;
+
+      if (rotation < 0) {
+        rotation += 360;
+      }
+
+      return rotation;
+
+    }
+
+
+    async function renderRotatePage() {
+
+      if (!pdfJsDocument) {
+        return;
+      }
+
+
+      const page =
+        await pdfJsDocument.getPage(
+          currentPageNumber
+        );
+
+
+      const extraRotation =
+        pageRotations[
+          currentPageNumber - 1
+        ];
+
+
+      const originalViewport =
+        page.getViewport({
+          scale: 1
+        });
+
+
+      const targetRotation =
+        normalizeRotation(
+          originalViewport.rotation +
+          extraRotation
+        );
+
+
+      const baseViewport =
+        page.getViewport({
+          scale: 1,
+          rotation: targetRotation
+        });
+
+
+      const maxWidth =
+        Math.min(
+          650,
+          window.innerWidth - 60
+        );
+
+
+      const scale =
+        Math.min(
+          1.4,
+          maxWidth / baseViewport.width
+        );
+
+
+      const viewport =
+        page.getViewport({
+          scale: scale,
+          rotation: targetRotation
+        });
+
+
+      rotatePdfCanvas.width =
+        viewport.width;
+
+      rotatePdfCanvas.height =
+        viewport.height;
+
+
+      rotatePdfCanvas.style.width =
+        viewport.width + "px";
+
+      rotatePdfCanvas.style.height =
+        viewport.height + "px";
+
+
+      const context =
+        rotatePdfCanvas.getContext("2d");
+
+
+      context.clearRect(
+        0,
+        0,
+        rotatePdfCanvas.width,
+        rotatePdfCanvas.height
+      );
+
+
+      await page.render({
+        canvasContext: context,
+        viewport: viewport
+      }).promise;
+
+
+      rotatePageInfo.textContent =
+        `Page ${currentPageNumber} / ${totalPages}`;
+
+
+      rotatePreviousPage.disabled =
+        currentPageNumber <= 1;
+
+
+      rotateNextPage.disabled =
+        currentPageNumber >= totalPages;
+
+
+      rotateCurrentInfo.textContent =
+        "Current page rotation: " +
+        normalizeRotation(extraRotation) +
+        "°";
+
+    }
+
+
+    rotatePreviousPage.addEventListener(
+      "click",
+      async () => {
+
+        if (currentPageNumber <= 1) {
+          return;
+        }
+
+        currentPageNumber--;
+
+        await renderRotatePage();
+
+      }
+    );
+
+
+    rotateNextPage.addEventListener(
+      "click",
+      async () => {
+
+        if (currentPageNumber >= totalPages) {
+          return;
+        }
+
+        currentPageNumber++;
+
+        await renderRotatePage();
+
+      }
+    );
+
+
+    async function applyRotation(amount) {
+
+      if (!pdfJsDocument) {
+        return;
+      }
+
+
+      if (
+        rotateApplyTo.value === "all"
+      ) {
+
+        for (
+          let index = 0;
+          index < pageRotations.length;
+          index++
+        ) {
+
+          pageRotations[index] =
+            normalizeRotation(
+              pageRotations[index] +
+              amount
+            );
+
+        }
+
+      } else {
+
+        const index =
+          currentPageNumber - 1;
+
+
+        pageRotations[index] =
+          normalizeRotation(
+            pageRotations[index] +
+            amount
+          );
+
+      }
+
+
+      await renderRotatePage();
+
+
+      rotateStatus.textContent =
+        rotateApplyTo.value === "all"
+          ? "Rotation applied to all pages."
+          : `Rotation applied to page ${currentPageNumber}.`;
+
+    }
+
+
+    rotateLeftButton.addEventListener(
+      "click",
+      async () => {
+
+        await applyRotation(-90);
+
+      }
+    );
+
+
+    rotateRightButton.addEventListener(
+      "click",
+      async () => {
+
+        await applyRotation(90);
+
+      }
+    );
+
+
+    rotateResetButton.addEventListener(
+      "click",
+      async () => {
+
+        if (!pdfJsDocument) {
+          return;
+        }
+
+
+        if (
+          rotateApplyTo.value === "all"
+        ) {
+
+          pageRotations.fill(0);
+
+          rotateStatus.textContent =
+            "All page rotations reset.";
+
+        } else {
+
+          pageRotations[
+            currentPageNumber - 1
+          ] = 0;
+
+          rotateStatus.textContent =
+            `Page ${currentPageNumber} rotation reset.`;
+
+        }
+
+
+        await renderRotatePage();
+
+      }
+    );
+
+
+    rotateDownloadButton.addEventListener(
+      "click",
+      async () => {
+
+        if (!selectedPdfFile) {
+
+          alert("Please select a PDF file.");
+          return;
+
+        }
+
+
+        rotateDownloadButton.disabled =
+          true;
+
+        rotateDownloadButton.textContent =
+          "Processing...";
+
+        rotateStatus.textContent =
+          "Creating rotated PDF...";
+
+
+        try {
+
+          const originalBytes =
+            await selectedPdfFile.arrayBuffer();
+
+
+          const pdfDocument =
+            await PDFLib.PDFDocument.load(
+              originalBytes
+            );
+
+
+          const pages =
+            pdfDocument.getPages();
+
+
+          pages.forEach(
+            (page, index) => {
+
+              const existingRotation =
+                page.getRotation().angle || 0;
+
+
+              const extraRotation =
+                pageRotations[index] || 0;
+
+
+              const finalRotation =
+                normalizeRotation(
+                  existingRotation +
+                  extraRotation
+                );
+
+
+              page.setRotation(
+                PDFLib.degrees(
+                  finalRotation
+                )
+              );
+
+            }
+          );
+
+
+          const outputBytes =
+            await pdfDocument.save();
+
+
+          const blob =
+            new Blob(
+              [outputBytes],
+              {
+                type: "application/pdf"
+              }
+            );
+
+
+          const url =
+            URL.createObjectURL(blob);
+
+
+          const link =
+            document.createElement("a");
+
+
+          link.href = url;
+
+
+          link.download =
+            selectedPdfFile.name.replace(
+              /\.pdf$/i,
+              ""
+            ) +
+            "-rotated.pdf";
+
+
+          document.body.appendChild(link);
+
+          link.click();
+
+          link.remove();
+
+
+          setTimeout(
+            () => {
+              URL.revokeObjectURL(url);
+            },
+            1500
+          );
+
+
+          rotateStatus.textContent =
+            "Rotated PDF downloaded successfully.";
+
+        } catch (error) {
+
+          console.error(
+            "Rotate PDF Error:",
+            error
+          );
+
+
+          rotateStatus.textContent =
+            "PDF rotation failed.";
+
+
+          alert(
+            "PDF rotation failed. Please try again."
+          );
+
+        } finally {
+
+          rotateDownloadButton.disabled =
+            false;
+
+          rotateDownloadButton.textContent =
+            "Rotate & Download PDF";
+
+        }
+
+      }
+    );
+
+  </script>
+
+</body>
+
+</html>

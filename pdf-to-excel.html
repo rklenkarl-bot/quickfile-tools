@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    PDF to Excel Converter | QuickFile Tools
+  </title>
+
+  <meta
+    name="description"
+    content="Convert PDF tables and text into Excel XLSX files online with QuickFile Tools."
+  >
+
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
+
+  <style>
+
+    .excel-container {
+      width: 100%;
+      max-width: 720px;
+      margin: 25px auto 0;
+    }
+
+    .excel-drop-zone {
+      padding: 10px;
+      border-radius: 12px;
+      transition: 0.2s ease;
+    }
+
+    .excel-drop-zone.drag-over {
+      background: #eefbf3;
+      outline: 2px dashed #16a34a;
+    }
+
+    .excel-file-box {
+      display: none;
+      margin-top: 20px;
+      padding: 16px;
+      border: 1px solid #e1e5eb;
+      border-radius: 10px;
+      background: #f9fafb;
+      text-align: left;
+    }
+
+    .excel-file-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .excel-file-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      background: #e9f9ef;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+
+    .excel-file-details {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .excel-file-name {
+      font-weight: 700;
+      color: #111827;
+      word-break: break-word;
+    }
+
+    .excel-file-size {
+      margin-top: 4px;
+      color: #667085;
+      font-size: 14px;
+    }
+
+    .excel-remove-button {
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 8px;
+      background: #feecec;
+      color: #c62828;
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    .excel-action-area {
+      display: none;
+      margin-top: 22px;
+    }
+
+    #convertExcelButton {
+      min-width: 220px;
+    }
+
+    .excel-loader {
+      display: none;
+      width: 38px;
+      height: 38px;
+      margin: 18px auto 0;
+      border: 4px solid #e4e7ec;
+      border-top-color: #16a34a;
+      border-radius: 50%;
+      animation: excel-spin 0.8s linear infinite;
+    }
+
+    @keyframes excel-spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    #excelStatus {
+      min-height: 26px;
+      margin-top: 14px;
+      text-align: center;
+      font-weight: 600;
+      line-height: 1.5;
+    }
+
+    .excel-success {
+      color: #15803d;
+    }
+
+    .excel-error {
+      color: #c62828;
+    }
+
+    .excel-info {
+      color: #475467;
+    }
+
+    .excel-note {
+      max-width: 650px;
+      margin: 18px auto 0;
+      padding: 13px 15px;
+      border-radius: 9px;
+      background: #f0fdf4;
+      color: #166534;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+  <!-- HEADER -->
+
+  <header class="main-header">
+
+    <div class="brand">
+
+      <div class="brand-logo">
+        QF
+      </div>
+
+      <div class="brand-text">
+
+        <h1>
+          QuickFile Tools
+        </h1>
+
+        <p>
+          Fast, Free & Easy Online File Tools
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <nav class="main-nav">
+
+      <a href="index.html">
+        Home
+      </a>
+
+      <a href="all-tools.html">
+        All Tools
+      </a>
+
+      <a href="#">
+        About Us
+      </a>
+
+      <a href="#">
+        Blog
+      </a>
+
+      <a href="#">
+        Contact
+      </a>
+
+    </nav>
+
+  </header>
+
+
+  <!-- HERO -->
+
+  <section class="merge-pdf-hero">
+
+    <h2>
+      PDF to Excel
+    </h2>
+
+    <p>
+      Convert tables and readable data from PDF files
+      into Excel spreadsheets.
+    </p>
+
+  </section>
+
+
+  <!-- TOOL -->
+
+  <section class="merge-pdf-tool-section">
+
+    <div
+      class="merge-upload-box excel-drop-zone"
+      id="excelDropZone"
+    >
+
+      <div class="merge-upload-icon">
+        📊
+      </div>
+
+      <h3>
+        Select PDF File
+      </h3>
+
+      <p>
+        Choose a text-based PDF containing tables or data.
+      </p>
+
+
+      <input
+        type="file"
+        id="pdfExcelInput"
+        accept=".pdf,application/pdf"
+        hidden
+      >
+
+
+      <button
+        type="button"
+        id="selectPdfExcelButton"
+        class="merge-select-button"
+      >
+        Select PDF File
+      </button>
+
+
+      <div class="excel-container">
+
+
+        <div
+          id="excelFileBox"
+          class="excel-file-box"
+        >
+
+          <div class="excel-file-row">
+
+            <div class="excel-file-icon">
+              📄
+            </div>
+
+
+            <div class="excel-file-details">
+
+              <div
+                id="excelFileName"
+                class="excel-file-name"
+              ></div>
+
+              <div
+                id="excelFileSize"
+                class="excel-file-size"
+              ></div>
+
+            </div>
+
+
+            <button
+              type="button"
+              id="removeExcelFileButton"
+              class="excel-remove-button"
+              title="Remove selected file"
+            >
+              ×
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <div
+          id="excelActionArea"
+          class="excel-action-area"
+        >
+
+          <button
+            type="button"
+            id="convertExcelButton"
+            class="merge-action-button"
+          >
+            Convert to Excel
+          </button>
+
+
+          <div
+            id="excelLoader"
+            class="excel-loader"
+          ></div>
+
+
+          <div id="excelStatus"></div>
+
+        </div>
+
+
+        <div class="excel-note">
+          Best results come from text-based PDFs containing
+          clear tables. Scanned image PDFs should first be
+          processed with the OCR PDF tool.
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- HOW TO USE -->
+
+  <section class="merge-info-section">
+
+    <div class="merge-info-card">
+
+      <h2>
+        How to Convert PDF to Excel
+      </h2>
+
+
+      <div class="merge-steps-grid">
+
+
+        <div class="merge-step">
+
+          <div class="merge-step-icon">
+            📁
+          </div>
+
+          <h3>
+            1. Select PDF
+          </h3>
+
+          <p>
+            Choose a PDF containing tables or readable data.
+          </p>
+
+        </div>
+
+
+        <div class="merge-step">
+
+          <div class="merge-step-icon">
+            🔍
+          </div>
+
+          <h3>
+            2. Detect Data
+          </h3>
+
+          <p>
+            The tool detects tables and readable text.
+          </p>
+
+        </div>
+
+
+        <div class="merge-step">
+
+          <div class="merge-step-icon">
+            📊
+          </div>
+
+          <h3>
+            3. Create Excel
+          </h3>
+
+          <p>
+            PDF data is placed into Excel worksheets.
+          </p>
+
+        </div>
+
+
+        <div class="merge-step">
+
+          <div class="merge-step-icon">
+            ⬇️
+          </div>
+
+          <h3>
+            4. Download
+          </h3>
+
+          <p>
+            Download the converted XLSX spreadsheet.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ABOUT -->
+
+  <section class="merge-about-section">
+
+    <div class="merge-about-card">
+
+      <div class="merge-about-icon">
+        📊
+      </div>
+
+
+      <div class="merge-about-content">
+
+        <h2>
+          About PDF to Excel
+        </h2>
+
+        <p>
+          PDF to Excel helps extract structured tables
+          and readable text from PDF documents into
+          Microsoft Excel compatible XLSX files.
+        </p>
+
+        <p>
+          Each PDF page is placed in a separate worksheet
+          so the converted information stays organized.
+        </p>
+
+      </div>
+
+
+      <div class="merge-about-points">
+
+        <p>
+          ✓ XLSX Output
+        </p>
+
+        <p>
+          ✓ Table Detection
+        </p>
+
+        <p>
+          ✓ Multi-page Support
+        </p>
+
+        <p>
+          ✓ Automatic Column Sizing
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- TRUST -->
+
+  <section class="merge-trust-section">
+
+    <div class="merge-trust-grid">
+
+
+      <div class="merge-trust-card">
+
+        <div class="merge-trust-icon">
+          📋
+        </div>
+
+        <h3>
+          Table Detection
+        </h3>
+
+        <p>
+          Structured PDF tables are extracted
+          into spreadsheet cells.
+        </p>
+
+      </div>
+
+
+      <div class="merge-trust-card">
+
+        <div class="merge-trust-icon">
+          📄
+        </div>
+
+        <h3>
+          Multiple Pages
+        </h3>
+
+        <p>
+          Each PDF page gets its own Excel worksheet.
+        </p>
+
+      </div>
+
+
+      <div class="merge-trust-card">
+
+        <div class="merge-trust-icon">
+          ⚡
+        </div>
+
+        <h3>
+          Simple Conversion
+        </h3>
+
+        <p>
+          Select your PDF and download an Excel file.
+        </p>
+
+      </div>
+
+
+      <div class="merge-trust-card">
+
+        <div class="merge-trust-icon">
+          ✅
+        </div>
+
+        <h3>
+          Excel Compatible
+        </h3>
+
+        <p>
+          Output uses the standard XLSX spreadsheet format.
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- FAQ -->
+
+  <section class="merge-faq-section">
+
+    <div class="merge-faq-container">
+
+
+      <div class="section-heading">
+
+        <h2>
+          Frequently Asked Questions
+        </h2>
+
+        <p>
+          Common questions about PDF to Excel conversion.
+        </p>
+
+      </div>
+
+
+      <div class="merge-faq-item">
+
+        <h3>
+          Can PDF tables be converted to Excel?
+        </h3>
+
+        <p>
+          Yes. The tool attempts to detect structured tables
+          and place their rows and columns into Excel cells.
+        </p>
+
+      </div>
+
+
+      <div class="merge-faq-item">
+
+        <h3>
+          What happens if no table is detected?
+        </h3>
+
+        <p>
+          Readable PDF text is placed line-by-line into
+          the worksheet instead.
+        </p>
+
+      </div>
+
+
+      <div class="merge-faq-item">
+
+        <h3>
+          Can scanned PDFs be converted?
+        </h3>
+
+        <p>
+          Scanned PDFs do not normally contain searchable
+          text. Use OCR PDF first for those files.
+        </p>
+
+      </div>
+
+
+      <div class="merge-faq-item">
+
+        <h3>
+          Does each PDF page get a separate sheet?
+        </h3>
+
+        <p>
+          Yes. Each PDF page is stored in its own
+          Excel worksheet.
+        </p>
+
+      </div>
+
+
+      <div class="merge-faq-item">
+
+        <h3>
+          What file format is downloaded?
+        </h3>
+
+        <p>
+          The converted spreadsheet is downloaded
+          in XLSX format.
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- FOOTER -->
+
+  <footer class="merge-page-footer">
+
+    <div class="merge-footer-links">
+
+      <a href="#">
+        Privacy Policy
+      </a>
+
+      <a href="#">
+        Terms of Use
+      </a>
+
+      <a href="#">
+        Disclaimer
+      </a>
+
+      <a href="#">
+        Sitemap
+      </a>
+
+      <a href="#">
+        Contact
+      </a>
+
+    </div>
+
+
+    <p>
+      © 2026 QuickFile Tools. All rights reserved.
+    </p>
+
+  </footer>
+
+
+  <script>
+
+    const pdfExcelInput =
+      document.getElementById(
+        "pdfExcelInput"
+      );
+
+    const selectPdfExcelButton =
+      document.getElementById(
+        "selectPdfExcelButton"
+      );
+
+    const excelDropZone =
+      document.getElementById(
+        "excelDropZone"
+      );
+
+    const excelFileBox =
+      document.getElementById(
+        "excelFileBox"
+      );
+
+    const excelFileName =
+      document.getElementById(
+        "excelFileName"
+      );
+
+    const excelFileSize =
+      document.getElementById(
+        "excelFileSize"
+      );
+
+    const removeExcelFileButton =
+      document.getElementById(
+        "removeExcelFileButton"
+      );
+
+    const excelActionArea =
+      document.getElementById(
+        "excelActionArea"
+      );
+
+    const convertExcelButton =
+      document.getElementById(
+        "convertExcelButton"
+      );
+
+    const excelLoader =
+      document.getElementById(
+        "excelLoader"
+      );
+
+    const excelStatus =
+      document.getElementById(
+        "excelStatus"
+      );
+
+    let selectedPdfForExcel = null;
+
+
+    selectPdfExcelButton.addEventListener(
+      "click",
+      function () {
+
+        pdfExcelInput.click();
+
+      }
+    );
+
+
+    pdfExcelInput.addEventListener(
+      "change",
+      function () {
+
+        if (
+          pdfExcelInput.files.length > 0
+        ) {
+
+          setExcelFile(
+            pdfExcelInput.files[0]
+          );
+
+        }
+
+      }
+    );
+
+
+    function setExcelFile(file) {
+
+      if (!file) {
+        return;
+      }
+
+      const isPdf =
+        file.type === "application/pdf"
+        ||
+        file.name
+          .toLowerCase()
+          .endsWith(".pdf");
+
+      if (!isPdf) {
+
+        showExcelError(
+          "Please select a valid PDF file."
+        );
+
+        return;
+      }
+
+      selectedPdfForExcel = file;
+
+      excelFileName.textContent =
+        file.name;
+
+      excelFileSize.textContent =
+        formatExcelFileSize(
+          file.size
+        );
+
+      excelFileBox.style.display =
+        "block";
+
+      excelActionArea.style.display =
+        "block";
+
+      excelStatus.textContent =
+        "";
+
+      excelStatus.className =
+        "";
+
+    }
+
+
+    removeExcelFileButton.addEventListener(
+      "click",
+      function () {
+
+        selectedPdfForExcel = null;
+
+        pdfExcelInput.value = "";
+
+        excelFileBox.style.display =
+          "none";
+
+        excelActionArea.style.display =
+          "none";
+
+        excelStatus.textContent =
+          "";
+
+        excelLoader.style.display =
+          "none";
+
+      }
+    );
+
+
+    [
+      "dragenter",
+      "dragover"
+    ].forEach(
+      function (eventName) {
+
+        excelDropZone.addEventListener(
+          eventName,
+          function (event) {
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            excelDropZone.classList.add(
+              "drag-over"
+            );
+
+          }
+        );
+
+      }
+    );
+
+
+    [
+      "dragleave",
+      "drop"
+    ].forEach(
+      function (eventName) {
+
+        excelDropZone.addEventListener(
+          eventName,
+          function (event) {
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            excelDropZone.classList.remove(
+              "drag-over"
+            );
+
+          }
+        );
+
+      }
+    );
+
+
+    excelDropZone.addEventListener(
+      "drop",
+      function (event) {
+
+        const files =
+          event.dataTransfer.files;
+
+        if (files.length > 0) {
+
+          setExcelFile(
+            files[0]
+          );
+
+        }
+
+      }
+    );
+
+
+    convertExcelButton.addEventListener(
+      "click",
+      async function () {
+
+        if (!selectedPdfForExcel) {
+
+          showExcelError(
+            "Please select a PDF file."
+          );
+
+          return;
+        }
+
+        convertExcelButton.disabled =
+          true;
+
+        convertExcelButton.textContent =
+          "Converting...";
+
+        excelLoader.style.display =
+          "block";
+
+        excelStatus.className =
+          "excel-info";
+
+        excelStatus.textContent =
+          "Extracting PDF tables and data...";
+
+        const formData =
+          new FormData();
+
+        formData.append(
+          "file",
+          selectedPdfForExcel
+        );
+
+        try {
+
+          const response =
+            await fetch(
+              "http://127.0.0.1:8001/pdf-to-excel",
+              {
+                method: "POST",
+                body: formData
+              }
+            );
+
+          if (!response.ok) {
+
+            let message =
+              "Unable to convert PDF to Excel.";
+
+            try {
+
+              const errorData =
+                await response.json();
+
+              if (errorData.detail) {
+
+                message =
+                  errorData.detail;
+
+              }
+
+            } catch (error) {
+            }
+
+            throw new Error(
+              message
+            );
+          }
+
+          const blob =
+            await response.blob();
+
+          if (blob.size === 0) {
+
+            throw new Error(
+              "The converted Excel file is empty."
+            );
+          }
+
+          const url =
+            URL.createObjectURL(
+              blob
+            );
+
+          const link =
+            document.createElement(
+              "a"
+            );
+
+          const originalName =
+            selectedPdfForExcel.name.replace(
+              /\.pdf$/i,
+              ""
+            );
+
+          link.href =
+            url;
+
+          link.download =
+            originalName + ".xlsx";
+
+          document.body.appendChild(
+            link
+          );
+
+          link.click();
+
+          link.remove();
+
+          setTimeout(
+            function () {
+
+              URL.revokeObjectURL(
+                url
+              );
+
+            },
+            2000
+          );
+
+          excelStatus.className =
+            "excel-success";
+
+          excelStatus.textContent =
+            "Excel file created and downloaded successfully.";
+
+        } catch (error) {
+
+          console.error(
+            error
+          );
+
+          showExcelError(
+            error.message
+            ||
+            "Unable to convert PDF to Excel."
+          );
+
+        } finally {
+
+          excelLoader.style.display =
+            "none";
+
+          convertExcelButton.disabled =
+            false;
+
+          convertExcelButton.textContent =
+            "Convert to Excel";
+
+        }
+
+      }
+    );
+
+
+    function showExcelError(
+      message
+    ) {
+
+      excelStatus.className =
+        "excel-error";
+
+      excelStatus.textContent =
+        message;
+
+    }
+
+
+    function formatExcelFileSize(
+      bytes
+    ) {
+
+      if (bytes < 1024) {
+
+        return bytes + " B";
+      }
+
+      if (
+        bytes < 1024 * 1024
+      ) {
+
+        return (
+          bytes / 1024
+        ).toFixed(1)
+        + " KB";
+      }
+
+      return (
+        bytes
+        /
+        (
+          1024 * 1024
+        )
+      ).toFixed(2)
+      + " MB";
+
+    }
+
+  </script>
+
+</body>
+
+</html>

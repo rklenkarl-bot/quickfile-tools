@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>JPG to PDF Online Free | QuickFile Tools</title>
+
+  <meta
+    name="description"
+    content="Convert JPG and JPEG images to PDF online free with QuickFile Tools."
+  >
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <header class="main-header">
+
+    <div class="brand">
+      <div class="brand-logo">QF</div>
+
+      <div class="brand-text">
+        <h1>QuickFile Tools</h1>
+        <p>Fast, Free & Easy Online File Tools</p>
+      </div>
+    </div>
+
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="all-tools.html">All Tools</a>
+      <a href="#">About Us</a>
+      <a href="#">Blog</a>
+      <a href="#">Contact</a>
+    </nav>
+
+  </header>
+
+
+  <section class="merge-pdf-hero">
+
+    <h2>JPG to PDF</h2>
+
+    <p>
+      Convert JPG and JPEG images into one PDF document quickly and easily.
+    </p>
+
+  </section>
+
+
+  <section class="merge-pdf-tool-section">
+
+    <div class="merge-upload-box">
+
+      <div class="merge-upload-icon">🖼️</div>
+
+      <h3>Select JPG Images</h3>
+
+      <p>
+        Choose one or multiple JPG images that you want to combine into a PDF.
+      </p>
+
+      <input
+        type="file"
+        id="jpgToPdfInput"
+        accept="image/jpeg,image/jpg"
+        multiple
+        hidden
+      >
+
+      <button
+        type="button"
+        id="selectJpgButton"
+        class="merge-select-button"
+      >
+        Select JPG Images
+      </button>
+
+      <div
+        id="jpgToPdfFileList"
+        class="merge-file-list"
+      ></div>
+
+      <button
+        type="button"
+        id="jpgToPdfButton"
+        class="merge-action-button"
+        disabled
+      >
+        Convert JPG to PDF
+      </button>
+
+      <div id="jpgToPdfStatus"></div>
+
+    </div>
+
+  </section>
+
+
+  <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
+
+
+  <script>
+
+    const jpgInput =
+      document.getElementById("jpgToPdfInput");
+
+    const selectJpgButton =
+      document.getElementById("selectJpgButton");
+
+    const jpgToPdfButton =
+      document.getElementById("jpgToPdfButton");
+
+    const fileList =
+      document.getElementById("jpgToPdfFileList");
+
+    const status =
+      document.getElementById("jpgToPdfStatus");
+
+
+    selectJpgButton.addEventListener("click", () => {
+      jpgInput.click();
+    });
+
+
+    jpgInput.addEventListener("change", () => {
+
+      const files = Array.from(jpgInput.files);
+
+      if (files.length === 0) {
+        jpgToPdfButton.disabled = true;
+        fileList.innerHTML = "";
+        return;
+      }
+
+      fileList.innerHTML =
+        files
+          .map(
+            (file, index) =>
+              `<div>${index + 1}. ${file.name}</div>`
+          )
+          .join("");
+
+      jpgToPdfButton.disabled = false;
+
+      status.textContent = "";
+    });
+
+
+    jpgToPdfButton.addEventListener("click", async () => {
+
+      const files = Array.from(jpgInput.files);
+
+      if (files.length === 0) {
+        alert("Please select at least one JPG image.");
+        return;
+      }
+
+      jpgToPdfButton.disabled = true;
+      jpgToPdfButton.textContent = "Converting...";
+
+      status.textContent =
+        "Creating your PDF...";
+
+      try {
+
+        const pdfDoc =
+          await PDFLib.PDFDocument.create();
+
+
+        for (
+          let index = 0;
+          index < files.length;
+          index++
+        ) {
+
+          status.textContent =
+            `Processing image ${index + 1} of ${files.length}...`;
+
+
+          const file = files[index];
+
+          const imageBytes =
+            await file.arrayBuffer();
+
+
+          const jpgImage =
+            await pdfDoc.embedJpg(imageBytes);
+
+
+          const imageWidth =
+            jpgImage.width;
+
+          const imageHeight =
+            jpgImage.height;
+
+
+          // A4 page size
+          const pageWidth = 595.28;
+          const pageHeight = 841.89;
+
+          // Small margin
+          const margin = 20;
+
+          const maxWidth =
+            pageWidth - margin * 2;
+
+          const maxHeight =
+            pageHeight - margin * 2;
+
+
+          const scale = Math.min(
+            maxWidth / imageWidth,
+            maxHeight / imageHeight
+          );
+
+
+          const drawWidth =
+            imageWidth * scale;
+
+          const drawHeight =
+            imageHeight * scale;
+
+
+          const page =
+            pdfDoc.addPage([
+              pageWidth,
+              pageHeight
+            ]);
+
+
+          page.drawImage(
+            jpgImage,
+            {
+              x:
+                (pageWidth - drawWidth) / 2,
+
+              y:
+                (pageHeight - drawHeight) / 2,
+
+              width: drawWidth,
+              height: drawHeight
+            }
+          );
+
+        }
+
+
+        const pdfBytes =
+          await pdfDoc.save();
+
+
+        const blob =
+          new Blob(
+            [pdfBytes],
+            {
+              type: "application/pdf"
+            }
+          );
+
+
+        const url =
+          URL.createObjectURL(blob);
+
+
+        const link =
+          document.createElement("a");
+
+        link.href = url;
+
+        link.download =
+          "quickfile-jpg-to-pdf.pdf";
+
+
+        document.body.appendChild(link);
+
+        link.click();
+
+        link.remove();
+
+
+        setTimeout(() => {
+          URL.revokeObjectURL(url);
+        }, 1000);
+
+
+        status.textContent =
+          "PDF created successfully.";
+
+      } catch (error) {
+
+        console.error(error);
+
+        status.textContent =
+          "JPG to PDF conversion failed.";
+
+      } finally {
+
+        jpgToPdfButton.disabled = false;
+
+        jpgToPdfButton.textContent =
+          "Convert JPG to PDF";
+
+      }
+
+    });
+
+  </script>
+<!-- =====================================================
+     QUICKFILE TOOLS - HOW TO USE JPG TO PDF
+     ===================================================== -->
+
+<section class="merge-info-section">
+
+  <div class="merge-info-card">
+
+    <h2>How to Use JPG to PDF</h2>
+
+    <div class="merge-steps-grid">
+
+      <div class="merge-step">
+        <div class="merge-step-icon">📁</div>
+        <h3>1. Select JPG Images</h3>
+        <p>
+          Click the Select JPG Images button and choose one or more
+          JPG or JPEG files from your device.
+        </p>
+      </div>
+
+      <div class="merge-step">
+        <div class="merge-step-icon">📋</div>
+        <h3>2. Review Images</h3>
+        <p>
+          Check the selected images and make sure they are the files
+          you want to include in the PDF.
+        </p>
+      </div>
+
+      <div class="merge-step">
+        <div class="merge-step-icon">📄</div>
+        <h3>3. Convert to PDF</h3>
+        <p>
+          Click Convert JPG to PDF to place your selected images
+          into a single PDF document.
+        </p>
+      </div>
+
+      <div class="merge-step">
+        <div class="merge-step-icon">⬇️</div>
+        <h3>4. Download</h3>
+        <p>
+          Your PDF will be created and downloaded directly to your device.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     QUICKFILE TOOLS - ABOUT
+     ===================================================== -->
+
+<section class="merge-about-section">
+
+  <div class="merge-about-card">
+
+    <div class="merge-about-icon">🛡️</div>
+
+    <div class="merge-about-content">
+
+      <h2>About QuickFile Tools</h2>
+
+      <p>
+        QuickFile Tools is a simple online platform designed to help you
+        work with PDF, image and document files quickly and easily.
+      </p>
+
+      <p>
+        The JPG to PDF tool lets you combine one or multiple JPG images
+        into a single PDF document directly from your browser.
+      </p>
+
+    </div>
+
+    <div class="merge-about-points">
+      <p>✓ Easy to Use</p>
+      <p>✓ Browser Based</p>
+      <p>✓ Fast Conversion</p>
+      <p>✓ Works on All Devices</p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     QUICKFILE TOOLS - SEO INFORMATION
+     ===================================================== -->
+
+<section class="merge-seo-section">
+
+  <div class="merge-seo-card">
+
+    <div class="merge-seo-icon">📈</div>
+
+    <div class="merge-seo-content">
+
+      <h2>Fast and Easy JPG to PDF Converter</h2>
+
+      <p>
+        Convert JPG and JPEG images into a PDF document quickly with
+        QuickFile Tools. Multiple images can be combined into one PDF file.
+      </p>
+
+      <p>
+        Images are automatically fitted and centered on PDF pages
+        for a clean and easy-to-read result.
+      </p>
+
+    </div>
+
+    <div class="merge-seo-points">
+      <p>✓ Multiple Images</p>
+      <p>✓ A4 PDF Pages</p>
+      <p>✓ Fast Processing</p>
+      <p>✓ Simple Download</p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     QUICKFILE TOOLS - TRUST CARDS
+     ===================================================== -->
+
+<section class="merge-trust-section">
+
+  <div class="merge-trust-grid">
+
+    <div class="merge-trust-card">
+      <div class="merge-trust-icon">🛡️</div>
+      <h3>Secure & Private</h3>
+      <p>Your selected images are processed with privacy in mind.</p>
+    </div>
+
+    <div class="merge-trust-card">
+      <div class="merge-trust-icon">⚡</div>
+      <h3>Super Fast</h3>
+      <p>Create a PDF from your JPG images quickly and easily.</p>
+    </div>
+
+    <div class="merge-trust-card">
+      <div class="merge-trust-icon">💻</div>
+      <h3>All Devices</h3>
+      <p>Works on desktop, laptop, tablet and modern mobile browsers.</p>
+    </div>
+
+    <div class="merge-trust-card">
+      <div class="merge-trust-icon">😊</div>
+      <h3>User Friendly</h3>
+      <p>A simple interface designed for everyday file conversion.</p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     QUICKFILE TOOLS - FAQ
+     ===================================================== -->
+
+<section class="merge-faq-section">
+
+  <div class="merge-faq-container">
+
+    <div class="section-heading">
+      <h2>Frequently Asked Questions</h2>
+      <p>Common questions about the JPG to PDF tool.</p>
+    </div>
+
+    <div class="merge-faq-item">
+      <h3>Is QuickFile JPG to PDF free to use?</h3>
+      <p>
+        Yes. You can use the JPG to PDF converter to create PDF files
+        from your images.
+      </p>
+    </div>
+
+    <div class="merge-faq-item">
+      <h3>Can I convert multiple JPG images at once?</h3>
+      <p>
+        Yes. You can select multiple JPG or JPEG images and combine them
+        into one PDF document.
+      </p>
+    </div>
+
+    <div class="merge-faq-item">
+      <h3>Will my images fit properly on the PDF page?</h3>
+      <p>
+        Yes. Images are automatically scaled and centered while keeping
+        their original aspect ratio.
+      </p>
+    </div>
+
+    <div class="merge-faq-item">
+      <h3>Does JPG to PDF work on mobile devices?</h3>
+      <p>
+        Yes. The tool is designed to work on modern desktop, tablet
+        and mobile browsers.
+      </p>
+    </div>
+
+    <div class="merge-faq-item">
+      <h3>Are my JPG images uploaded to a server?</h3>
+      <p>
+        This JPG to PDF tool processes the selected images directly
+        in your browser.
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     QUICKFILE TOOLS - FOOTER
+     ===================================================== -->
+
+<footer class="merge-page-footer">
+
+  <div class="merge-footer-links">
+    <a href="#">Privacy Policy</a>
+    <a href="#">Terms of Use</a>
+    <a href="#">Disclaimer</a>
+    <a href="#">Sitemap</a>
+    <a href="#">Contact</a>
+  </div>
+
+  <p>© 2026 QuickFile Tools. All rights reserved.</p>
+
+</footer>
+</body>
+</html>

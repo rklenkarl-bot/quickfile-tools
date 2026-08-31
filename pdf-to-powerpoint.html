@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    PDF to PowerPoint Converter | QuickFile Tools
+  </title>
+
+  <meta
+    name="description"
+    content="Convert PDF pages into PowerPoint slides online. Create a PPTX presentation from your PDF quickly and easily with QuickFile Tools."
+  >
+
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
+
+  <style>
+
+    .ppt-container {
+      width: 100%;
+      max-width: 720px;
+      margin: 25px auto 0;
+    }
+
+    .ppt-drop-zone {
+      padding: 10px;
+      border-radius: 12px;
+      transition: 0.2s ease;
+    }
+
+    .ppt-drop-zone.drag-over {
+      background: #eef5ff;
+      outline: 2px dashed #2563eb;
+    }
+
+    .ppt-file-box {
+      display: none;
+      margin-top: 20px;
+      padding: 16px;
+      border: 1px solid #e1e5eb;
+      border-radius: 10px;
+      background: #f9fafb;
+      text-align: left;
+    }
+
+    .ppt-file-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .ppt-file-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      background: #eaf2ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 25px;
+      flex-shrink: 0;
+    }
+
+    .ppt-file-details {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .ppt-file-name {
+      font-weight: 700;
+      color: #111827;
+      word-break: break-word;
+    }
+
+    .ppt-file-size {
+      margin-top: 4px;
+      color: #667085;
+      font-size: 14px;
+    }
+
+    .ppt-remove-button {
+      border: none;
+      background: #feecec;
+      color: #c62828;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .ppt-action-area {
+      display: none;
+      margin-top: 22px;
+    }
+
+    #convertPptButton {
+      min-width: 220px;
+    }
+
+    .ppt-loader {
+      display: none;
+      width: 38px;
+      height: 38px;
+      margin: 18px auto 0;
+      border: 4px solid #e4e7ec;
+      border-top-color: #2563eb;
+      border-radius: 50%;
+      animation: ppt-spin 0.8s linear infinite;
+    }
+
+    @keyframes ppt-spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    #pptStatus {
+      min-height: 26px;
+      margin-top: 14px;
+      text-align: center;
+      font-weight: 600;
+      line-height: 1.5;
+    }
+
+    .ppt-success {
+      color: #15803d;
+    }
+
+    .ppt-error {
+      color: #c62828;
+    }
+
+    .ppt-info {
+      color: #475467;
+    }
+
+    .ppt-note {
+      max-width: 650px;
+      margin: 18px auto 0;
+      padding: 13px 15px;
+      border-radius: 9px;
+      background: #fff8e8;
+      color: #6b5316;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 600px) {
+
+      .ppt-file-row {
+        align-items: flex-start;
+      }
+
+      .ppt-remove-button {
+        width: 32px;
+        height: 32px;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+  <!-- HEADER -->
+
+  <header class="main-header">
+
+    <div class="brand">
+
+      <div class="brand-logo">
+        QF
+      </div>
+
+      <div class="brand-text">
+
+        <h1>
+          QuickFile Tools
+        </h1>
+
+        <p>
+          Fast, Free & Easy Online File Tools
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <nav class="main-nav">
+
+      <a href="index.html">
+        Home
+      </a>
+
+      <a href="all-tools.html">
+        All Tools
+      </a>
+
+      <a href="#">
+        About Us
+      </a>
+
+      <a href="#">
+        Blog
+      </a>
+
+      <a href="#">
+        Contact
+      </a>
+
+    </nav>
+
+  </header>
+
+
+  <!-- HERO -->
+
+  <section class="merge-pdf-hero">
+
+    <h2>
+      PDF to PowerPoint
+    </h2>
+
+    <p>
+      Convert PDF pages into PowerPoint slides quickly
+      while preserving the original visual layout.
+    </p>
+
+  </section>
+
+
+  <!-- TOOL -->
+
+  <section class="merge-pdf-tool-section">
+
+    <div
+      class="merge-upload-box ppt-drop-zone"
+      id="pptDropZone"
+    >
+
+      <div class="merge-upload-icon">
+        📊
+      </div>
+
+      <h3>
+        Select PDF File
+      </h3>
+
+      <p>
+        Choose a PDF document to convert into a PowerPoint presentation.
+      </p>
+
+
+      <input
+        type="file"
+        id="pdfPptInput"
+        accept=".pdf,application/pdf"
+        hidden
+      >
+
+
+      <button
+        type="button"
+        id="selectPdfPptButton"
+        class="merge-select-button"
+      >
+        Select PDF File
+      </button>
+
+
+      <div class="ppt-container">
+
+
+        <div
+          id="pptFileBox"
+          class="ppt-file-box"
+        >
+
+          <div class="ppt-file-row">
+
+            <div class="ppt-file-icon">
+              📄
+            </div>
+
+
+            <div class="ppt-file-details">
+
+              <div
+                id="pptFileName"
+                class="ppt-file-name"
+              ></div>
+
+              <div
+                id="pptFileSize"
+                class="ppt-file-size"
+              ></div>
+
+            </div>
+
+
+            <button
+              type="button"
+              id="removePptFileButton"
+              class="ppt-remove-button"
+              title="Remove selected file"
+            >
+              ×
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <div
+          id="pptActionArea"
+          class="ppt-action-area"
+        >
+
+          <button
+            type="button"
+            id="convertPptButton"
+            class="merge-action-button"
+          >
+            Convert to PowerPoint
+          </button>
+
+
+          <div
+            id="pptLoader"
+            class="ppt-loader"
+          ></div>
+
+
+          <div id="pptStatus"></div>
+
+        </div>
+
+
+        <div class="ppt-note">
+          Each PDF page will become one PowerPoint slide.
+          The original PDF appearance is preserved as a
+          high-quality slide image.
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- HOW TO USE -->
+
+  <section class="merge-info-section">
+
+    <div class="merge-info-card">
+
+      <h2>
+        How to Convert PDF to PowerPoint
+      </h2>
+
+
+      <div class="merge-steps-grid">
+
+
+        <div class="merge-step">
+
+          <div class="merge-step-icon">
+            📁
+          </div>
+
+          <h3>
+            1. Select PDF
+          </h3>
+
+          <p>
+            Choose the PDF file you want to convert.
+          </p>
+
+        </div>
+
+
+        <div class="merge-step">
+
+          <div class="merge-step-icon">
+            ⚙️
+          </div>
+
+          <h3>
+            2. Convert
+          </h3>
+
+          <p>
+            Click Convert to PowerPoint to start processing.
+          </p>
+
+        </div>
+
+
+        <div class="merge-step">
+
+          <div class="merge-step-icon">
+            📊
+          </div>
+
+          <h3>
+            3. Create Slides
+          </h3>
+
+          <p>
+            Every PDF page is converted into a PowerPoint slide.
+          </p>
+
+        </div>
+
+
+        <div class="merge-step">
+
+          <div class="merge-step-icon">
+            ⬇️
+          </div>
+
+          <h3>
+            4. Download
+          </h3>
+
+          <p>
+            Your PPTX presentation downloads automatically.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ABOUT -->
+
+  <section class="merge-about-section">
+
+    <div class="merge-about-card">
+
+      <div class="merge-about-icon">
+        📊
+      </div>
+
+
+      <div class="merge-about-content">
+
+        <h2>
+          About PDF to PowerPoint
+        </h2>
+
+        <p>
+          QuickFile Tools PDF to PowerPoint converter turns
+          every PDF page into a separate PowerPoint slide.
+        </p>
+
+        <p>
+          This method helps preserve fonts, graphics,
+          diagrams, tables and the visual layout of the
+          original PDF document.
+        </p>
+
+      </div>
+
+
+      <div class="merge-about-points">
+
+        <p>
+          ✓ High Quality Slides
+        </p>
+
+        <p>
+          ✓ Original Layout Preserved
+        </p>
+
+        <p>
+          ✓ Multi-page PDF Support
+        </p>
+
+        <p>
+          ✓ PPTX Download
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- TRUST -->
+
+  <section class="merge-trust-section">
+
+    <div class="merge-trust-grid">
+
+
+      <div class="merge-trust-card">
+
+        <div class="merge-trust-icon">
+          🎯
+        </div>
+
+        <h3>
+          Accurate Layout
+        </h3>
+
+        <p>
+          Slides preserve the visual appearance of
+          the original PDF pages.
+        </p>
+
+      </div>
+
+
+      <div class="merge-trust-card">
+
+        <div class="merge-trust-icon">
+          🖼️
+        </div>
+
+        <h3>
+          High Quality
+        </h3>
+
+        <p>
+          PDF pages are rendered at good resolution
+          for presentation use.
+        </p>
+
+      </div>
+
+
+      <div class="merge-trust-card">
+
+        <div class="merge-trust-icon">
+          ⚡
+        </div>
+
+        <h3>
+          Easy Conversion
+        </h3>
+
+        <p>
+          Select your PDF and create a presentation
+          in just a few steps.
+        </p>
+
+      </div>
+
+
+      <div class="merge-trust-card">
+
+        <div class="merge-trust-icon">
+          📄
+        </div>
+
+        <h3>
+          Multi-page Support
+        </h3>
+
+        <p>
+          PDFs with multiple pages become
+          multi-slide PowerPoint presentations.
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- FAQ -->
+
+  <section class="merge-faq-section">
+
+    <div class="merge-faq-container">
+
+
+      <div class="section-heading">
+
+        <h2>
+          Frequently Asked Questions
+        </h2>
+
+        <p>
+          Common questions about converting PDF to PowerPoint.
+        </p>
+
+      </div>
+
+
+      <div class="merge-faq-item">
+
+        <h3>
+          Will every PDF page become a separate slide?
+        </h3>
+
+        <p>
+          Yes. Each page of the PDF is placed on its
+          own PowerPoint slide.
+        </p>
+
+      </div>
+
+
+      <div class="merge-faq-item">
+
+        <h3>
+          Will my PDF layout stay the same?
+        </h3>
+
+        <p>
+          The tool renders each PDF page as a high-quality
+          image, helping preserve the original visual layout.
+        </p>
+
+      </div>
+
+
+      <div class="merge-faq-item">
+
+        <h3>
+          Can I edit the PDF text directly in PowerPoint?
+        </h3>
+
+        <p>
+          The converted PDF pages are image-based slides,
+          so the original text is not converted into
+          individual editable PowerPoint text boxes.
+        </p>
+
+      </div>
+
+
+      <div class="merge-faq-item">
+
+        <h3>
+          Can I convert a password-protected PDF?
+        </h3>
+
+        <p>
+          Password-protected PDFs must first be unlocked
+          before they can be converted.
+        </p>
+
+      </div>
+
+
+      <div class="merge-faq-item">
+
+        <h3>
+          What PowerPoint file format will I receive?
+        </h3>
+
+        <p>
+          The converted presentation is downloaded
+          as a modern PPTX file.
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- FOOTER -->
+
+  <footer class="merge-page-footer">
+
+    <div class="merge-footer-links">
+
+      <a href="#">
+        Privacy Policy
+      </a>
+
+      <a href="#">
+        Terms of Use
+      </a>
+
+      <a href="#">
+        Disclaimer
+      </a>
+
+      <a href="#">
+        Sitemap
+      </a>
+
+      <a href="#">
+        Contact
+      </a>
+
+    </div>
+
+
+    <p>
+      © 2026 QuickFile Tools. All rights reserved.
+    </p>
+
+  </footer>
+
+
+  <script>
+
+    const pdfPptInput =
+      document.getElementById(
+        "pdfPptInput"
+      );
+
+
+    const selectPdfPptButton =
+      document.getElementById(
+        "selectPdfPptButton"
+      );
+
+
+    const pptDropZone =
+      document.getElementById(
+        "pptDropZone"
+      );
+
+
+    const pptFileBox =
+      document.getElementById(
+        "pptFileBox"
+      );
+
+
+    const pptFileName =
+      document.getElementById(
+        "pptFileName"
+      );
+
+
+    const pptFileSize =
+      document.getElementById(
+        "pptFileSize"
+      );
+
+
+    const removePptFileButton =
+      document.getElementById(
+        "removePptFileButton"
+      );
+
+
+    const pptActionArea =
+      document.getElementById(
+        "pptActionArea"
+      );
+
+
+    const convertPptButton =
+      document.getElementById(
+        "convertPptButton"
+      );
+
+
+    const pptLoader =
+      document.getElementById(
+        "pptLoader"
+      );
+
+
+    const pptStatus =
+      document.getElementById(
+        "pptStatus"
+      );
+
+
+    let selectedPdfForPpt = null;
+
+
+    selectPdfPptButton.addEventListener(
+      "click",
+      function () {
+
+        pdfPptInput.click();
+
+      }
+    );
+
+
+    pdfPptInput.addEventListener(
+      "change",
+      function () {
+
+        if (
+          pdfPptInput.files.length > 0
+        ) {
+
+          setPptFile(
+            pdfPptInput.files[0]
+          );
+
+        }
+
+      }
+    );
+
+
+    function setPptFile(file) {
+
+      if (!file) {
+        return;
+      }
+
+
+      const isPdf =
+        file.type === "application/pdf"
+        ||
+        file.name
+          .toLowerCase()
+          .endsWith(".pdf");
+
+
+      if (!isPdf) {
+
+        showPptError(
+          "Please select a valid PDF file."
+        );
+
+        return;
+
+      }
+
+
+      selectedPdfForPpt =
+        file;
+
+
+      pptFileName.textContent =
+        file.name;
+
+
+      pptFileSize.textContent =
+        formatPptFileSize(
+          file.size
+        );
+
+
+      pptFileBox.style.display =
+        "block";
+
+
+      pptActionArea.style.display =
+        "block";
+
+
+      pptStatus.textContent =
+        "";
+
+
+      pptStatus.className =
+        "";
+
+
+      convertPptButton.disabled =
+        false;
+
+
+      convertPptButton.textContent =
+        "Convert to PowerPoint";
+
+    }
+
+
+    removePptFileButton.addEventListener(
+      "click",
+      function () {
+
+        resetPptTool();
+
+      }
+    );
+
+
+    function resetPptTool() {
+
+      selectedPdfForPpt =
+        null;
+
+
+      pdfPptInput.value =
+        "";
+
+
+      pptFileBox.style.display =
+        "none";
+
+
+      pptActionArea.style.display =
+        "none";
+
+
+      pptStatus.textContent =
+        "";
+
+
+      pptStatus.className =
+        "";
+
+
+      pptLoader.style.display =
+        "none";
+
+
+      convertPptButton.disabled =
+        false;
+
+
+      convertPptButton.textContent =
+        "Convert to PowerPoint";
+
+    }
+
+
+    [
+      "dragenter",
+      "dragover"
+    ].forEach(
+      function (eventName) {
+
+        pptDropZone.addEventListener(
+          eventName,
+          function (event) {
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            pptDropZone.classList.add(
+              "drag-over"
+            );
+
+          }
+        );
+
+      }
+    );
+
+
+    [
+      "dragleave",
+      "drop"
+    ].forEach(
+      function (eventName) {
+
+        pptDropZone.addEventListener(
+          eventName,
+          function (event) {
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            pptDropZone.classList.remove(
+              "drag-over"
+            );
+
+          }
+        );
+
+      }
+    );
+
+
+    pptDropZone.addEventListener(
+      "drop",
+      function (event) {
+
+        const files =
+          event.dataTransfer.files;
+
+
+        if (
+          files.length > 0
+        ) {
+
+          setPptFile(
+            files[0]
+          );
+
+        }
+
+      }
+    );
+
+
+    convertPptButton.addEventListener(
+      "click",
+      async function () {
+
+        if (!selectedPdfForPpt) {
+
+          showPptError(
+            "Please select a PDF file."
+          );
+
+          return;
+
+        }
+
+
+        convertPptButton.disabled =
+          true;
+
+
+        convertPptButton.textContent =
+          "Converting...";
+
+
+        pptLoader.style.display =
+          "block";
+
+
+        pptStatus.className =
+          "ppt-info";
+
+
+        pptStatus.textContent =
+          "Creating PowerPoint slides. Please wait...";
+
+
+        const formData =
+          new FormData();
+
+
+        formData.append(
+          "file",
+          selectedPdfForPpt
+        );
+
+
+        try {
+
+          const response =
+            await fetch(
+              "http://127.0.0.1:8001/pdf-to-powerpoint",
+              {
+                method: "POST",
+                body: formData
+              }
+            );
+
+
+          if (!response.ok) {
+
+            let errorMessage =
+              "Unable to convert PDF to PowerPoint.";
+
+
+            try {
+
+              const errorData =
+                await response.json();
+
+
+              if (
+                errorData.detail
+              ) {
+
+                errorMessage =
+                  errorData.detail;
+
+              }
+
+            } catch (error) {
+            }
+
+
+            throw new Error(
+              errorMessage
+            );
+
+          }
+
+
+          const blob =
+            await response.blob();
+
+
+          if (
+            blob.size === 0
+          ) {
+
+            throw new Error(
+              "The converted PowerPoint file is empty."
+            );
+
+          }
+
+
+          const downloadUrl =
+            URL.createObjectURL(
+              blob
+            );
+
+
+          const downloadLink =
+            document.createElement(
+              "a"
+            );
+
+
+          const originalName =
+            selectedPdfForPpt.name.replace(
+              /\.pdf$/i,
+              ""
+            );
+
+
+          downloadLink.href =
+            downloadUrl;
+
+
+          downloadLink.download =
+            originalName +
+            ".pptx";
+
+
+          document.body.appendChild(
+            downloadLink
+          );
+
+
+          downloadLink.click();
+
+
+          downloadLink.remove();
+
+
+          setTimeout(
+            function () {
+
+              URL.revokeObjectURL(
+                downloadUrl
+              );
+
+            },
+            2000
+          );
+
+
+          pptStatus.className =
+            "ppt-success";
+
+
+          pptStatus.textContent =
+            "PowerPoint created and downloaded successfully.";
+
+
+        } catch (error) {
+
+          console.error(
+            error
+          );
+
+
+          showPptError(
+            error.message
+            ||
+            "Unable to convert PDF to PowerPoint."
+          );
+
+
+        } finally {
+
+          pptLoader.style.display =
+            "none";
+
+
+          convertPptButton.disabled =
+            false;
+
+
+          convertPptButton.textContent =
+            "Convert to PowerPoint";
+
+        }
+
+      }
+    );
+
+
+    function showPptError(
+      message
+    ) {
+
+      pptStatus.className =
+        "ppt-error";
+
+
+      pptStatus.textContent =
+        message;
+
+    }
+
+
+    function formatPptFileSize(
+      bytes
+    ) {
+
+      if (
+        bytes < 1024
+      ) {
+
+        return bytes + " B";
+
+      }
+
+
+      if (
+        bytes < 1024 * 1024
+      ) {
+
+        return (
+          bytes / 1024
+        ).toFixed(1)
+        + " KB";
+
+      }
+
+
+      return (
+        bytes
+        /
+        (
+          1024
+          *
+          1024
+        )
+      ).toFixed(2)
+      + " MB";
+
+    }
+
+  </script>
+
+
+</body>
+
+</html>

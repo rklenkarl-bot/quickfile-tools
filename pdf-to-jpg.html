@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>PDF to JPG Online Free | QuickFile Tools</title>
+
+  <meta
+    name="description"
+    content="Convert PDF pages into high-quality JPG images online with QuickFile Tools."
+  />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <header class="main-header">
+
+    <div class="brand">
+      <div class="brand-logo">QF</div>
+
+      <div class="brand-text">
+        <h1>QuickFile Tools</h1>
+        <p>Fast, Free & Easy Online File Tools</p>
+      </div>
+    </div>
+
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="all-tools.html">All Tools</a>
+      <a href="#">About Us</a>
+      <a href="#">Blog</a>
+      <a href="#">Contact</a>
+    </nav>
+
+  </header>
+
+
+  <section class="merge-pdf-hero">
+    <h2>PDF to JPG</h2>
+
+    <p>
+      Convert every page of your PDF into high-quality JPG images.
+    </p>
+  </section>
+
+
+  <section class="merge-pdf-tool-section">
+
+    <div class="merge-upload-box">
+
+      <div class="merge-upload-icon">🖼️</div>
+
+      <h3>Select PDF File</h3>
+
+      <p>
+        Choose a PDF file to convert its pages into JPG images.
+      </p>
+
+      <input
+        type="file"
+        id="pdfToJpgInput"
+        accept="application/pdf"
+        hidden
+      />
+
+      <button
+        type="button"
+        id="selectPdfToJpgButton"
+        class="merge-select-button"
+      >
+        Select PDF File
+      </button>
+
+      <div
+        id="pdfToJpgFileList"
+        class="merge-file-list"
+      ></div>
+
+      <button
+        type="button"
+        id="pdfToJpgButton"
+        class="merge-action-button"
+        disabled
+      >
+        Convert PDF to JPG
+      </button>
+
+      <div id="pdfToJpgStatus"></div>
+
+    </div>
+
+  </section>
+
+
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.min.mjs"
+    type="module"
+  ></script>
+
+  <script type="module">
+
+    import * as pdfjsLib from
+      "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.min.mjs";
+
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+      "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.worker.min.mjs";
+
+
+    const input =
+      document.getElementById("pdfToJpgInput");
+
+    const selectButton =
+      document.getElementById("selectPdfToJpgButton");
+
+    const convertButton =
+      document.getElementById("pdfToJpgButton");
+
+    const fileList =
+      document.getElementById("pdfToJpgFileList");
+
+    const status =
+      document.getElementById("pdfToJpgStatus");
+
+
+    selectButton.addEventListener("click", () => {
+      input.click();
+    });
+
+
+    input.addEventListener("change", () => {
+
+      const file = input.files[0];
+
+      if (!file) {
+        return;
+      }
+
+      fileList.textContent = file.name;
+
+      convertButton.disabled = false;
+
+      status.textContent = "";
+    });
+
+
+    convertButton.addEventListener("click", async () => {
+  const file = input.files[0];
+
+  if (!file) {
+    alert("Please select a PDF file.");
+    return;
+  }
+
+  convertButton.disabled = true;
+  convertButton.textContent = "Converting...";
+  status.textContent = "Converting PDF pages to JPG...";
+
+  try {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const response = await fetch(
+      "http://127.0.0.1:8001/pdf-to-jpg",
+      {
+        method: "POST",
+        body: formData
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("PDF to JPG conversion failed.");
+    }
+
+    const blob = await response.blob();
+
+    const contentType =
+      response.headers.get("content-type") || "";
+
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+
+    const baseName =
+      file.name.replace(/\.pdf$/i, "");
+
+    if (contentType.includes("application/zip")) {
+      link.download = baseName + "-jpg.zip";
+    } else {
+      link.download = baseName + ".jpg";
+    }
+
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    setTimeout(() => {
+      URL.revokeObjectURL(url);
+    }, 1000);
+
+    status.textContent =
+      "PDF converted to JPG successfully.";
+
+  } catch (error) {
+    console.error(error);
+
+    status.textContent =
+      "PDF to JPG conversion failed.";
+
+  } finally {
+    convertButton.disabled = false;
+    convertButton.textContent =
+      "Convert PDF to JPG";
+  }
+});
+
+  </script>
+<!-- =====================================================
+     QUICKFILE TOOLS - HOW TO USE PDF TO JPG
+     ===================================================== -->
+
+<section class="merge-info-section">
+
+  <div class="merge-info-card">
+
+    <h2>How to Use PDF to JPG</h2>
+
+    <div class="merge-steps-grid">
+
+      <div class="merge-step">
+        <div class="merge-step-icon">📁</div>
+        <h3>1. Select PDF File</h3>
+        <p>
+          Click the Select PDF File button and choose the PDF document
+          you want to convert.
+        </p>
+      </div>
+
+      <div class="merge-step">
+        <div class="merge-step-icon">📄</div>
+        <h3>2. Review File</h3>
+        <p>
+          Check the selected PDF file before starting the conversion.
+        </p>
+      </div>
+
+      <div class="merge-step">
+        <div class="merge-step-icon">🖼️</div>
+        <h3>3. Convert to JPG</h3>
+        <p>
+          Click Convert PDF to JPG to turn each PDF page into
+          a high-quality JPG image.
+        </p>
+      </div>
+
+      <div class="merge-step">
+        <div class="merge-step-icon">⬇️</div>
+        <h3>4. Download</h3>
+        <p>
+          Download the JPG image or ZIP file containing all converted pages.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     QUICKFILE TOOLS - ABOUT
+     ===================================================== -->
+
+<section class="merge-about-section">
+
+  <div class="merge-about-card">
+
+    <div class="merge-about-icon">🛡️</div>
+
+    <div class="merge-about-content">
+
+      <h2>About QuickFile Tools</h2>
+
+      <p>
+        QuickFile Tools is a simple online platform for working with PDF,
+        image and document files quickly and easily.
+      </p>
+
+      <p>
+        The PDF to JPG tool converts PDF pages into clear JPG images
+        that can be viewed, shared and stored easily.
+      </p>
+
+    </div>
+
+    <div class="merge-about-points">
+      <p>✓ Easy to Use</p>
+      <p>✓ High Quality</p>
+      <p>✓ Fast Conversion</p>
+      <p>✓ Works on All Devices</p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     QUICKFILE TOOLS - SEO INFORMATION
+     ===================================================== -->
+
+<section class="merge-seo-section">
+
+  <div class="merge-seo-card">
+
+    <div class="merge-seo-icon">📈</div>
+
+    <div class="merge-seo-content">
+
+      <h2>Fast and Easy PDF to JPG Converter</h2>
+
+      <p>
+        Convert PDF pages into high-quality JPG images with QuickFile Tools.
+        The tool is designed for simple and reliable document conversion.
+      </p>
+
+      <p>
+        You can convert single-page or multi-page PDF documents and
+        download the resulting images quickly.
+      </p>
+
+    </div>
+
+    <div class="merge-seo-points">
+      <p>✓ High-Quality JPG</p>
+      <p>✓ Multi-Page Support</p>
+      <p>✓ Simple Interface</p>
+      <p>✓ Quick Download</p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     QUICKFILE TOOLS - TRUST CARDS
+     ===================================================== -->
+
+<section class="merge-trust-section">
+
+  <div class="merge-trust-grid">
+
+    <div class="merge-trust-card">
+      <div class="merge-trust-icon">🛡️</div>
+      <h3>Secure Processing</h3>
+      <p>Your files are handled only for the conversion process.</p>
+    </div>
+
+    <div class="merge-trust-card">
+      <div class="merge-trust-icon">⚡</div>
+      <h3>Fast Conversion</h3>
+      <p>Convert PDF pages into JPG images quickly.</p>
+    </div>
+
+    <div class="merge-trust-card">
+      <div class="merge-trust-icon">💻</div>
+      <h3>All Devices</h3>
+      <p>Use the tool on desktop, laptop, tablet and mobile devices.</p>
+    </div>
+
+    <div class="merge-trust-card">
+      <div class="merge-trust-icon">😊</div>
+      <h3>User Friendly</h3>
+      <p>A clean and simple interface for everyday users.</p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     QUICKFILE TOOLS - FAQ
+     ===================================================== -->
+
+<section class="merge-faq-section">
+
+  <div class="merge-faq-container">
+
+    <div class="section-heading">
+      <h2>Frequently Asked Questions</h2>
+      <p>Common questions about the PDF to JPG tool.</p>
+    </div>
+
+    <div class="merge-faq-item">
+      <h3>Is QuickFile PDF to JPG free to use?</h3>
+      <p>
+        Yes. You can use the PDF to JPG converter without paying for
+        individual conversions.
+      </p>
+    </div>
+
+    <div class="merge-faq-item">
+      <h3>Can I convert a multi-page PDF?</h3>
+      <p>
+        Yes. Each page of a multi-page PDF is converted into a separate
+        JPG image and can be downloaded together.
+      </p>
+    </div>
+
+    <div class="merge-faq-item">
+      <h3>Will the JPG images keep good quality?</h3>
+      <p>
+        The tool renders PDF pages at a high resolution to provide
+        clear JPG output.
+      </p>
+    </div>
+
+    <div class="merge-faq-item">
+      <h3>Does PDF to JPG work on mobile?</h3>
+      <p>
+        Yes. The page is designed to work on modern desktop and mobile browsers.
+      </p>
+    </div>
+
+    <div class="merge-faq-item">
+      <h3>What happens to my uploaded PDF?</h3>
+      <p>
+        The PDF is processed only for conversion and temporary processing files
+        are used by the conversion service.
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     QUICKFILE TOOLS - FOOTER
+     ===================================================== -->
+
+<footer class="merge-page-footer">
+
+  <div class="merge-footer-links">
+    <a href="#">Privacy Policy</a>
+    <a href="#">Terms of Use</a>
+    <a href="#">Disclaimer</a>
+    <a href="#">Sitemap</a>
+    <a href="#">Contact</a>
+  </div>
+
+  <p>© 2026 QuickFile Tools. All rights reserved.</p>
+
+</footer>
+</body>
+</html>
