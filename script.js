@@ -491,7 +491,7 @@ if (
   pdfToWordButton &&
   pdfToWordFileList &&
   pdfToWordMode &&
-  window.location.pathname.endsWith("pdf-to-word.html")
+  (window.location.pathname.endsWith("pdf-to-word.html") || window.location.pathname.endsWith("/pdf-to-word"))
 ) {
 
   // Select PDF
@@ -538,10 +538,10 @@ if (
 
       const selectedMode = pdfToWordMode.value;
 
-      let endpoint = "http://127.0.0.1:8001/pdf-to-word";
+      let endpoint = "https://quickfile-tools-1.onrender.com/pdf-to-word";
 
       if (selectedMode === "layout") {
-        endpoint = "http://127.0.0.1:8001/pdf-to-word-layout";
+        endpoint = "https://quickfile-tools-1.onrender.com/pdf-to-word-layout";
       }
 
       const response = await fetch(endpoint, {
@@ -660,7 +660,7 @@ if (
     formData.append("file", file);
 
     const response = await fetch(
-      "http://127.0.0.1:8001/word-to-pdf",
+      "https://quickfile-tools-1.onrender.com/word-to-pdf",
       {
         method: "POST",
         body: formData,
